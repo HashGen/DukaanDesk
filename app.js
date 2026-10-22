@@ -635,7 +635,18 @@
     const target = event.target.closest('[data-action]');
     if (!target) { if (!event.target.closest('.native-language-picker')) app.querySelectorAll('.language-menu').forEach(menu => { menu.hidden = true; }); return; }
     const action = target.dataset.action;
-    if (action === 'toggle-language') { const menu = app.querySelector('[data-language-menu]'); if (menu) menu.hidden = !menu.hidden; return; }
+    if (action === 'toggle-language') {
+      const menu = app.querySelector('[data-language-menu]');
+      if (menu) {
+        menu.hidden = !menu.hidden;
+        if (!menu.hidden) {
+          const header = app.querySelector('.topbar');
+          const headerBottom = header ? header.getBoundingClientRect().bottom : 100;
+          menu.style.top = Math.max(0, headerBottom + 8) + 'px';
+        }
+      }
+      return;
+    }
     if (action.startsWith('set-language:')) { setLanguage(action.slice(13)); return; }
     if (action === 'toggle-theme') { const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = next; try { localStorage.setItem('dukaandesk.theme.v1', next); } catch (error) {} render(); return; }
     if (action === 'dismiss-sale' && event.target === target) { closeSale(); return; }

@@ -646,11 +646,12 @@
       const opening = menu.hidden;
       app.querySelectorAll('.custom-select-menu').forEach(item => { item.hidden = true; item.classList.remove('language-menu-opening'); });
       if (opening) {
-        const rect = target.getBoundingClientRect();
-        menu.style.setProperty('--select-menu-top', rect.bottom + 'px');
-        menu.style.setProperty('--select-menu-left', rect.left + 'px');
-        menu.style.setProperty('--select-menu-width', rect.width + 'px');
-        menu.style.top = rect.bottom + 'px';
+        const header = app.querySelector('.topbar');
+        const headerBottom = header ? header.getBoundingClientRect().bottom : 176;
+        menu.style.setProperty('--language-menu-top', Math.max(0, headerBottom) + 'px');
+        menu.style.top = Math.max(0, headerBottom) + 'px';
+        menu.style.setProperty('--select-menu-left', '16px');
+        menu.style.setProperty('--select-menu-width', 'calc(100vw - 32px)');
         menu.hidden = false;
         target.setAttribute('aria-expanded','true');
         menu.classList.remove('language-menu-opening');

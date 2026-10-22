@@ -371,3 +371,35 @@ html body .native-language-picker .app-select-menu{
   box-shadow:0 12px 28px rgba(15,35,22,.14)!important;
   z-index:99999!important;
 }
+
+
+/* Smoothly reveal the language list from behind the header's bottom edge. */
+html body .topbar-actions .native-language-picker .app-select-menu,
+html body .native-language-picker .app-select-menu{
+  position:fixed!important;
+  top:var(--language-menu-top, 176px)!important;
+  left:50%!important;right:auto!important;bottom:auto!important;
+  transform:translateX(-50%)!important;
+  width:min(340px,calc(100vw - 32px))!important;
+  max-height:calc(100dvh - var(--language-menu-top,176px) - 100px)!important;
+  margin:0!important;padding:8px!important;overflow-y:auto!important;overflow-x:hidden!important;
+  border:1px solid var(--line,#dce5db)!important;border-top:0!important;
+  border-radius:0 0 18px 18px!important;background:var(--paper,#fff)!important;
+  transform-origin:top center!important;
+  clip-path:inset(0 0 100% 0 round 0 0 18px 18px);
+  opacity:0;visibility:hidden;
+  transition:clip-path 340ms cubic-bezier(.22,.8,.28,1),opacity 220ms ease,visibility 0s linear 340ms!important;
+  z-index:99999!important;
+}
+html body .topbar-actions .native-language-picker .app-select-menu.language-menu-opening,
+html body .native-language-picker .app-select-menu.language-menu-opening{
+  clip-path:inset(0 0 0 0 round 0 0 18px 18px);
+  opacity:1;visibility:visible;
+  transition:clip-path 340ms cubic-bezier(.22,.8,.28,1),opacity 220ms ease,visibility 0s!important;
+}
+html body .topbar-actions .native-language-picker .app-select-menu[hidden],
+html body .native-language-picker .app-select-menu[hidden]{
+  display:block!important;pointer-events:none!important;
+  clip-path:inset(0 0 100% 0 round 0 0 18px 18px)!important;
+  opacity:0!important;visibility:hidden!important;
+}

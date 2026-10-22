@@ -1,0 +1,19 @@
+{
+  "name": "DukaanDesk — Smart Shop Hisab",
+  "short_name": "DukaanDesk",
+  "description": "Private daily sales and udhaar ledger for every shopkeeper.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f7f4",
+  "theme_color": "#172b26",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

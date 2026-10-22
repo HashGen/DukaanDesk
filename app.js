@@ -263,7 +263,7 @@
     const customers = customerBalances();
     const totalDue = round(customers.reduce((sum, row) => sum + row.due, 0));
     const collectionHistory = [...state.collections].sort((a, b) => (b.date + b.createdAt).localeCompare(a.date + a.createdAt)).slice(0, 8);
-    return '<section class="page-enter"><div class="section-intro"><div><div class="eyebrow"><span class="eyebrow-line"></span> CUSTOMER KHATA</div><h2>Udhaar ka hisaab clear rakhein.</h2><p>Customer-wise baaki dekhein aur payment milte hi jama karein.</p></div><button type="button" class="primary-button" data-action="new-collection" onclick="window.__dukaanOpenCollection(); return false;">' + svg('plus', 17) + ' Udhaar jama</button></div>' +
+    return '<section class="page-enter"><div class="section-intro"><div><div class="eyebrow"><span class="eyebrow-line"></span> CUSTOMER KHATA</div><h2>Udhaar ka hisaab clear rakhein.</h2><p>Customer-wise baaki dekhein aur payment milte hi jama karein.</p></div><button type="button" class="primary-button" data-action="new-collection">' + svg('plus', 17) + ' Udhaar jama</button></div>' +
       '<div class="credit-summary-grid"><div class="credit-summary-card"><span class="credit-summary-icon credit-green">' + svg('wallet', 18) + '</span><small>TOTAL OUTSTANDING</small><strong>' + money(totalDue) + '</strong><span>Customers se lena baaki</span></div><div class="credit-summary-card"><span class="credit-summary-icon credit-orange">' + svg('users', 18) + '</span><small>CUSTOMERS</small><strong>' + customers.length + '</strong><span>Jinke paise baaki hain</span></div><div class="credit-summary-card"><span class="credit-summary-icon credit-blue">' + svg('down', 18) + '</span><small>ALL-TIME RECOVERY</small><strong>' + money(state.collections.reduce((sum, row) => sum + row.amount, 0)) + '</strong><span>Jama hua udhaar</span></div></div>' +
       '<section class="panel credit-panel"><div class="panel-heading panel-heading-row"><div><h3>Customer balances</h3><p>Sabse zyada baaki pehle</p></div><span class="register-total">' + customers.length + ' customers</span></div>' +
       (customers.length ? '<div class="customer-grid">' + customers.map(row => '<article class="customer-card"><div class="customer-card-top"><span class="customer-avatar">' + escapeHtml(row.name.charAt(0).toUpperCase()) + '</span><span class="customer-status">BAAKI</span></div><strong class="customer-name">' + escapeHtml(row.name) + '</strong><div class="customer-balance-label">Total baaki</div><div class="customer-balance">' + money(row.due) + '</div><button class="primary-button collect-button" data-action="collect-for:' + escapeHtml(row.name) + '">' + svg('down', 14) + ' Jama karein</button></article>').join('') + '</div>' : '<div class="empty-state"><div class="empty-icon">' + svg('users', 22) + '</div><strong>Koi udhaar baaki nahi</strong><p>Jis sale mein payment baaki hogi, customer yahan dikhai dega.</p></div>') +
@@ -386,7 +386,7 @@
       '<div class="workspace"><header class="topbar"><div class="topbar-title-wrap"><div class="mobile-brand"><span class="brand-mark">' + svg('store', 18) + '</span><strong>DukaanDesk</strong></div><div class="topbar-title"><h1>' + active.label + '</h1><p>' + longDate(todayISO()) + '</p></div></div>' +
       '<div class="topbar-actions">' + languagePickerHtml('header-language-picker') + '<button type="button" class="theme-toggle" data-action="toggle-theme" aria-label="Toggle light and dark mode" title="Toggle theme">' + (document.documentElement.dataset.theme === 'dark' ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.9 13A8.5 8.5 0 0 1 11 3.1 8.5 8.5 0 1 0 20.9 13Z"/></svg>') + '</button>' +
       '<span class="today-chip">' + svg('calendar', 15) + longDate(todayISO()) + '</span>' +
-      '<button type="button" class="primary-button" data-action="new-sale" onclick="window.__dukaanOpenSale(); return false;">' + svg('plus', 16) + '<span>' + tr('openSale') + '</span></button></div></header>' +
+      '<button type="button" class="primary-button" data-action="new-sale">' + svg('plus', 16) + '<span>' + tr('openSale') + '</span></button></div></header>' +
       '<main class="main-content">' + content + '</main><footer class="mobile-footer">' + svg('shield', 13) + ' Private by design · Local device storage</footer></div>' +
       '<nav class="mobile-nav" aria-label="Mobile navigation">' + nav(true) + '</nav></div>';
   }
@@ -403,6 +403,21 @@
     if (tab === 'history') content = historyHtml();
     if (tab === 'guide') content = guideHtml();
     app.innerHTML = shellHtml(content) + saleModalHtml() + collectionModalHtml() + confirmModalHtml();
+    // Bind the entry buttons directly after each render; avoids delegated-click conflicts.
+    app.querySelectorAll('[data-action="new-sale"]').forEach(button => {
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        openSale();
+      });
+    });
+    app.querySelectorAll('[data-action="new-collection"]').forEach(button => {
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        openCollection();
+      });
+    });
     translateVisibleText(app);
     if (saleDialog) {
       const input = app.querySelector('[data-field="sale-item"]');
@@ -666,15 +681,6 @@
   });
   window.__dukaanOpenSale = function () { openSale(); };
   window.__dukaanOpenCollection = function () { openCollection(); };
-  // Delegate primary entry actions from the document so header and dashboard buttons work reliably.
-  document.addEventListener('click', function (event) {
-    const button = event.target && event.target.closest ? event.target.closest('[data-action="new-sale"], [data-action="new-collection"]') : null;
-    if (!button) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    if (button.dataset.action === 'new-sale') window.__dukaanOpenSale();
-    else window.__dukaanOpenCollection();
-  }, true);
   render();
   window.__dukaanBoot = true;
 })();

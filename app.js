@@ -240,8 +240,8 @@
       weekData.map(day => '<div class="bar-column" title="' + day.iso + ': ' + money(day.amount) + '"><span class="bar-value">' + (day.amount > 0 ? money(day.amount) : '') + '</span><div class="bar-track"><div class="bar-fill ' + (day.iso === today ? 'bar-today' : '') + '" style="height:' + Math.max(day.amount > 0 ? 8 : 3, (day.amount / weekMax) * 100) + '%"></div></div><span class="bar-label ' + (day.iso === today ? 'bar-label-today' : '') + '">' + day.label + '</span></div>').join('') +
       '</div><div class="chart-foot"><span><span class="legend-dot"></span> Daily sales</span><span><span class="legend-dot legend-today"></span> Today</span></div></section>' +
       '<section class="panel quick-panel"><div class="panel-heading"><div><h3>Quick actions</h3><p>Roz ke kaam, ek tap mein</p></div><span class="panel-heading-icon">' + svg('activity', 17) + '</span></div>' +
-      '<button type="button" class="quick-action" data-action="new-sale" onclick="window.__dukaanOpenSale(); event.stopPropagation(); return false;"><span class="quick-icon quick-icon-green">' + svg('plus', 18) + '</span><span class="quick-copy"><strong>Nayi bikri add karein</strong><small>Item, quantity aur payment save karein</small></span>' + svg('trend', 17) + '</button>' +
-      '<button type="button" class="quick-action" data-action="new-collection" onclick="window.__dukaanOpenCollection(); event.stopPropagation(); return false;"><span class="quick-icon quick-icon-orange">' + svg('down', 18) + '</span><span class="quick-copy"><strong>Udhaar jama karein</strong><small>Customer se mila paisa record karein</small></span>' + svg('trend', 17) + '</button>' +
+      '<button type="button" class="quick-action" data-action="new-sale"><span class="quick-icon quick-icon-green">' + svg('plus', 18) + '</span><span class="quick-copy"><strong>Nayi bikri add karein</strong><small>Item, quantity aur payment save karein</small></span>' + svg('trend', 17) + '</button>' +
+      '<button type="button" class="quick-action" data-action="new-collection"><span class="quick-icon quick-icon-orange">' + svg('down', 18) + '</span><span class="quick-copy"><strong>Udhaar jama karein</strong><small>Customer se mila paisa record karein</small></span>' + svg('trend', 17) + '</button>' +
       '<button class="quick-action" data-action="tab:history"><span class="quick-icon quick-icon-blue">' + svg('file', 18) + '</span><span class="quick-copy"><strong>Purana hisaab dekhein</strong><small>Kisi bhi din ki entry kholein</small></span>' + svg('trend', 17) + '</button>' +
       '<div class="quick-foot">' + svg('shield', 14) + '<span>Har change aapke device mein auto-save hota hai.</span></div></section></div>' +
       '<section class="panel recent-panel"><div class="panel-heading panel-heading-row"><div><h3>Recent entries</h3><p>Aapki latest saved bikri</p></div><button class="text-link" data-action="tab:transactions">Saari entries ↗</button></div>' +
@@ -253,7 +253,7 @@
       const q = normalized(searchQuery);
       return !q || normalized(sale.item).includes(q) || normalized(sale.customer).includes(q) || sale.date.includes(q);
     });
-    return '<section class="page-enter"><div class="section-intro"><div><div class="eyebrow"><span class="eyebrow-line"></span> SALES REGISTER</div><h2>Har entry par poora control.</h2><p>Galti se amount likh diya? Entry ko kabhi bhi edit ya delete karein.</p></div><button type="button" class="primary-button" data-action="new-sale" onclick="window.__dukaanOpenSale(); return false;">' + svg('plus', 17) + ' Nayi bikri</button></div>' +
+    return '<section class="page-enter"><div class="section-intro"><div><div class="eyebrow"><span class="eyebrow-line"></span> SALES REGISTER</div><h2>Har entry par poora control.</h2><p>Galti se amount likh diya? Entry ko kabhi bhi edit ya delete karein.</p></div><button type="button" class="primary-button" data-action="new-sale">' + svg('plus', 17) + ' Nayi bikri</button></div>' +
       '<div class="list-toolbar"><div class="search-field">' + svg('search', 17) + '<input type="search" data-field="search" placeholder="Item, customer ya date search karein..." aria-label="Search sales" value="' + escapeHtml(searchQuery) + '">' + (searchQuery ? '<button data-action="clear-search" aria-label="Clear search">' + svg('close', 15) + '</button>' : '') + '</div><div class="result-count">' + list.length + ' entries</div></div>' +
       '<section class="panel register-panel"><div class="panel-heading panel-heading-row"><div><h3>Sales register</h3><p>Latest entries pehle dikhengi</p></div><span class="register-total">' + state.sales.length + ' total</span></div>' +
       saleList(list, searchQuery ? 'Koi matching entry nahi mili' : 'Sales register khaali hai', searchQuery ? 'Doosra item, customer ya date try karein.' : 'Nayi bikri add karke register shuru karein.') +
@@ -666,6 +666,15 @@
   });
   window.__dukaanOpenSale = function () { openSale(); };
   window.__dukaanOpenCollection = function () { openCollection(); };
+  // Delegate primary entry actions from the document so header and dashboard buttons work reliably.
+  document.addEventListener('click', function (event) {
+    const button = event.target && event.target.closest ? event.target.closest('[data-action="new-sale"], [data-action="new-collection"]') : null;
+    if (!button) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (button.dataset.action === 'new-sale') window.__dukaanOpenSale();
+    else window.__dukaanOpenCollection();
+  }, true);
   render();
   window.__dukaanBoot = true;
 })();

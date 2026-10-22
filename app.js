@@ -641,8 +641,14 @@
         menu.hidden = !menu.hidden;
         if (!menu.hidden) {
           const header = app.querySelector('.topbar');
-          const headerBottom = header ? header.getBoundingClientRect().bottom : 100;
+          const headerBottom = header ? header.getBoundingClientRect().bottom : 176;
+          menu.style.setProperty('--language-menu-top', Math.max(0, headerBottom) + 'px');
           menu.style.top = Math.max(0, headerBottom) + 'px';
+          menu.classList.remove('language-menu-opening');
+          void menu.offsetWidth;
+          menu.classList.add('language-menu-opening');
+        } else {
+          menu.classList.remove('language-menu-opening');
         }
       }
       return;

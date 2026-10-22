@@ -403,3 +403,34 @@ html body .native-language-picker .app-select-menu[hidden]{
   clip-path:inset(0 0 100% 0 round 0 0 18px 18px)!important;
   opacity:0!important;visibility:hidden!important;
 }
+
+
+/* Native-looking app select menus, anchored to the exact select control. */
+.custom-select-field{position:relative;width:100%;min-width:0}
+.custom-select-trigger{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:10px!important;width:100%!important;min-width:0!important;height:46px!important;
+  padding:0 12px!important;border:1px solid var(--line,#dfe8dd)!important;
+  border-radius:12px!important;background:var(--paper,#fff)!important;
+  color:var(--ink,#26382d)!important;font:inherit!important;text-align:left!important;
+}
+.custom-select-trigger>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.custom-select-trigger svg{flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.custom-select-menu{
+  position:fixed!important;top:var(--select-menu-top,200px)!important;
+  left:var(--select-menu-left,20px)!important;right:auto!important;bottom:auto!important;
+  transform:none!important;width:max(var(--select-menu-width,180px),min(220px,calc(100vw - 32px)))!important;
+  max-width:calc(100vw - 32px)!important;max-height:min(55dvh,420px)!important;
+  overflow-y:auto!important;overflow-x:hidden!important;padding:7px!important;
+  border:1px solid var(--line,#dce5db)!important;border-radius:0 0 14px 14px!important;
+  background:var(--paper,#fff)!important;box-shadow:0 12px 28px rgba(15,35,22,.16)!important;
+  z-index:100000!important;clip-path:inset(0 0 100% 0 round 0 0 14px 14px);
+  opacity:0;visibility:hidden;
+  transition:clip-path 300ms cubic-bezier(.22,.8,.28,1),opacity 180ms ease,visibility 0s linear 300ms!important;
+}
+.custom-select-menu.language-menu-opening{
+  clip-path:inset(0 0 0 0 round 0 0 14px 14px);opacity:1;visibility:visible;
+  transition:clip-path 300ms cubic-bezier(.22,.8,.28,1),opacity 180ms ease,visibility 0s!important;
+}
+.custom-select-menu[hidden]{display:none!important}
+.custom-select-option{min-height:46px!important}

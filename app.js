@@ -46,7 +46,7 @@
     render();
   }
   function languagePickerHtml(className) {
-    return '<div class="' + className + ' native-language-picker" aria-label="' + escapeHtml(tr('choose')) + '"><button type="button" class="language-trigger" data-action="toggle-language" aria-label="' + escapeHtml(tr('choose')) + '" title="' + escapeHtml(tr('choose')) + '">' + svg('globe', 20) + '</button><div class="language-menu app-select-menu" data-language-menu hidden>' + LANGUAGES.map(option => '<button type="button" class="language-option' + (option.id === currentLanguage ? ' selected' : '') + '" data-action="set-language:' + option.id + '">' + escapeHtml(option.name) + '</button>').join('') + '</div></div>';
+    return '<div class="' + className + ' native-language-picker" aria-label="' + escapeHtml(tr('choose')) + '"><button type="button" class="language-trigger" data-action="toggle-language" aria-label="' + escapeHtml(tr('choose')) + '" title="' + escapeHtml(tr('choose')) + '">' + '<svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"></path></svg>' + '</button><div class="language-menu app-select-menu" data-language-menu hidden>' + LANGUAGES.map(option => '<button type="button" class="language-option' + (option.id === currentLanguage ? ' selected' : '') + '" data-action="set-language:' + option.id + '">' + escapeHtml(option.name) + '</button>').join('') + '</div></div>';
   }
 
   let saleDialog = false;

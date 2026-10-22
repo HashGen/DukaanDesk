@@ -307,3 +307,36 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .flow-diagram{direction:rt
   stroke:currentColor!important;fill:none!important;stroke-width:1.8!important;
   stroke-linecap:round!important;stroke-linejoin:round!important;
 }
+
+
+/* Dropdowns match the app UI. Language menu starts directly below the app header. */
+.topbar-actions .native-language-picker .app-select-menu,
+.native-language-picker .app-select-menu{
+  position:fixed!important;top:160px;left:50%!important;right:auto!important;bottom:auto!important;
+  transform:translateX(-50%)!important;width:min(340px,calc(100vw - 32px))!important;
+  min-width:0!important;max-width:calc(100vw - 32px)!important;
+  max-height:calc(100dvh - 190px)!important;overflow-y:auto!important;overflow-x:hidden!important;
+  padding:8px!important;border:1px solid var(--line,#dce5db)!important;
+  border-radius:0 0 18px 18px!important;background:var(--paper,#fff)!important;
+  box-shadow:0 12px 28px rgba(15,35,22,.16)!important;z-index:99999!important;
+}
+.topbar-actions .native-language-picker .app-select-menu .language-option{
+  display:flex!important;width:100%!important;min-height:48px!important;
+  align-items:center!important;padding:0 14px!important;border:0!important;
+  border-radius:10px!important;background:transparent!important;color:var(--ink,#26382d)!important;
+  font-size:14px!important;text-align:left!important;
+}
+.topbar-actions .native-language-picker .app-select-menu .language-option.selected{
+  background:var(--green-soft,#edf5e9)!important;color:var(--ink,#26382d)!important;
+}
+.form-field select{
+  appearance:none!important;-webkit-appearance:none!important;
+  background-color:var(--paper,#fff)!important;color:var(--ink,#26382d)!important;
+  border:1px solid var(--line,#dfe8dd)!important;border-radius:12px!important;
+}
+.form-grid-three .form-field:nth-child(2){position:relative}
+.form-grid-three .form-field:nth-child(2):after{
+  content:"";position:absolute;right:12px;bottom:18px;width:8px;height:8px;
+  border-right:1.8px solid var(--muted,#64756a);border-bottom:1.8px solid var(--muted,#64756a);
+  transform:rotate(45deg);pointer-events:none;
+}

@@ -434,3 +434,37 @@ html body .native-language-picker .app-select-menu[hidden]{
 }
 .custom-select-menu[hidden]{display:none!important}
 .custom-select-option{min-height:46px!important}
+
+
+/* Tactile 3D button system: consistent raised surface and smooth press feedback. */
+:root{--press-ease:cubic-bezier(.2,.75,.25,1)}
+button,.custom-select-trigger{
+  -webkit-tap-highlight-color:transparent;
+  transform:translateY(0);
+  transition:transform 150ms var(--press-ease),box-shadow 150ms var(--press-ease),
+    background-color 180ms ease,border-color 180ms ease,color 180ms ease,
+    filter 180ms ease!important;
+}
+.primary-button,.topbar-actions .primary-button,.collect-button,.today-button,
+.delete-confirm-button,.custom-select-trigger{
+  box-shadow:0 3px 0 rgba(16,65,48,.22),0 5px 10px rgba(22,62,45,.10)!important;
+}
+.secondary-button,.icon-button,.modal-close,.row-action,.nav-item,
+.bottom-nav button,.tab-button,.search-field button{
+  box-shadow:0 2px 0 rgba(32,52,40,.12),0 4px 9px rgba(32,52,40,.06);
+}
+button:hover:not(:disabled),.custom-select-trigger:hover{
+  filter:brightness(1.025);
+}
+button:active:not(:disabled),.custom-select-trigger:active{
+  transform:translateY(2px) scale(.985)!important;
+  box-shadow:0 0 0 rgba(16,65,48,0),0 1px 3px rgba(22,62,45,.10)!important;
+  transition-duration:70ms!important;
+}
+button:focus-visible,.custom-select-trigger:focus-visible{
+  outline:3px solid rgba(36,131,99,.28)!important;outline-offset:3px!important;
+}
+button:disabled{transform:none!important;box-shadow:none!important;filter:none!important}
+@media(prefers-reduced-motion:reduce){
+  button,.custom-select-trigger{transition:none!important}
+}

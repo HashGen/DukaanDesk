@@ -526,3 +526,33 @@ html body .custom-select-menu.language-menu-opening{
 @media(prefers-reduced-motion:reduce){
   .mobile-nav-link{transition:none!important}
 }
+
+
+/* Bottom navigation: add breathing room between raised buttons. */
+@media(max-width:700px){
+  .mobile-nav{
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    gap:7px!important;
+    padding-left:8px!important;padding-right:8px!important;
+  }
+  .mobile-nav-link{
+    width:100%!important;min-width:0!important;
+    margin:0!important;
+  }
+}
+/* Keep the page from leaving a keyboard-sized blank tail while editing. */
+@media(max-width:700px){
+  body:has(input:focus),body:has(textarea:focus),body:has(select:focus){
+    padding-bottom:0!important;
+  }
+  body:has(input:focus) .app-shell,
+  body:has(textarea:focus) .app-shell,
+  body:has(select:focus) .app-shell{
+    padding-bottom:0!important;
+  }
+  body:has(input:focus) .mobile-nav,
+  body:has(textarea:focus) .mobile-nav,
+  body:has(select:focus) .mobile-nav{
+    display:none!important;
+  }
+}

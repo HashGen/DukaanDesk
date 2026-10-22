@@ -46,7 +46,7 @@
     render();
   }
   function languagePickerHtml(className) {
-    return '<label class="' + className + ' native-language-picker" aria-label="' + escapeHtml(tr('choose')) + '" title="' + escapeHtml(tr('choose')) + '"><span class="language-globe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span><select data-field="language" aria-label="' + escapeHtml(tr('choose')) + '">' + LANGUAGES.map(option => '<option value="' + option.id + '"' + (option.id === currentLanguage ? ' selected' : '') + '>' + escapeHtml(option.name) + '</option>').join('') + '</select></label>';
+    return '<div class="' + className + ' native-language-picker" aria-label="' + escapeHtml(tr('choose')) + '"><button type="button" class="language-trigger" data-action="toggle-language" aria-label="' + escapeHtml(tr('choose')) + '" title="' + escapeHtml(tr('choose')) + '">' + svg('globe', 20) + '</button><div class="language-menu app-select-menu" data-language-menu hidden>' + LANGUAGES.map(option => '<button type="button" class="language-option' + (option.id === currentLanguage ? ' selected' : '') + '" data-action="set-language:' + option.id + '">' + escapeHtml(option.name) + '</button>').join('') + '</div></div>';
   }
 
   let saleDialog = false;
@@ -357,7 +357,7 @@
     const paid = Math.max(0, Number(saleDraft.paid) || 0);
     const due = round(Math.max(0, total - paid));
     const names = allCustomerNames();
-    return '<div class="modal-backdrop" data-action="dismiss-sale"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="sale-modal-title"><div class="modal-heading"><div><span class="modal-kicker">SALES REGISTER</span><h2 id="sale-modal-title">' + title + '</h2><p>Item aur payment ki details bharein.</p></div><button class="modal-close" data-action="close-sale" aria-label="Close dialog">' + svg('close', 17) + '</button></div><form class="modal-form" data-form="sale" novalidate>' +
+    return '<section class="entry-page"><section class="entry-page-card" aria-labelledby="sale-modal-title"><div class="modal-heading"><div><span class="modal-kicker">SALES REGISTER</span><h2 id="sale-modal-title">' + title + '</h2><p>Item aur payment ki details bharein.</p></div><button class="modal-close" data-action="close-sale" aria-label="Close dialog">' + svg('close', 17) + '</button></div><form class="modal-form" data-form="sale" novalidate>' +
       field('Date', 'sale-date', saleDraft.date, { type: 'date', required: true }) +
       field('Item ka naam', 'sale-item', saleDraft.item, { required: true, placeholder: 'Jaise: Chawal 5kg' }) +
       '<div class="form-grid-three">' + field('Quantity', 'sale-qty', saleDraft.qty, { type: 'number', min: '0.01', step: 'any', required: true }) + field('Unit', 'sale-unit', saleDraft.unit, { select: units }) + field('Rate (₹)', 'sale-price', saleDraft.price, { type: 'number', min: '0', step: 'any', required: true, placeholder: '0' }) + '</div>' +
@@ -367,25 +367,25 @@
       (names.length ? '<datalist id="customer-names">' + names.map(name => '<option value="' + escapeHtml(name) + '"></option>').join('') + '</datalist>' : '') +
       field('Note (optional)', 'sale-note', saleDraft.note, { placeholder: 'Koi extra details...' }) +
       (saleError ? '<div class="form-error" role="alert">' + escapeHtml(saleError) + '</div>' : '') +
-      '<div class="modal-actions"><button type="button" class="secondary-button" data-action="close-sale">Cancel</button><button type="submit" class="primary-button">' + svg('check', 16) + (isEdit ? ' Changes save karein' : ' Sale save karein') + '</button></div></form></section></div>';
+      '<div class="modal-actions"><button type="button" class="secondary-button" data-action="close-sale">Cancel</button><button type="submit" class="primary-button">' + svg('check', 16) + (isEdit ? ' Changes save karein' : ' Sale save karein') + '</button></div></form></section></section>';
   }
   function collectionModalHtml() {
     if (!collectionDialog) return '';
     const isEdit = Boolean(editingCollectionId);
     const due = currentDueForCustomer(collectionDraft.customer);
-    return '<div class="modal-backdrop" data-action="dismiss-collection"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="collection-modal-title"><div class="modal-heading"><div><span class="modal-kicker">CUSTOMER KHATA</span><h2 id="collection-modal-title">' + (isEdit ? 'Jama entry edit karein' : 'Udhaar jama karein') + '</h2><p>Customer se mile payment ka record banayein.</p></div><button class="modal-close" data-action="close-collection" aria-label="Close dialog">' + svg('close', 17) + '</button></div><form class="modal-form" data-form="collection" novalidate>' +
+    return '<section class="entry-page"><section class="entry-page-card" aria-labelledby="collection-modal-title"><div class="modal-heading"><div><span class="modal-kicker">CUSTOMER KHATA</span><h2 id="collection-modal-title">' + (isEdit ? 'Jama entry edit karein' : 'Udhaar jama karein') + '</h2><p>Customer se mile payment ka record banayein.</p></div><button class="modal-close" data-action="close-collection" aria-label="Close dialog">' + svg('close', 17) + '</button></div><form class="modal-form" data-form="collection" novalidate>' +
       field('Date', 'collection-date', collectionDraft.date, { type: 'date', required: true }) +
       field('Customer naam', 'collection-customer', collectionDraft.customer, { required: true, placeholder: 'Customer ka naam' }) +
       '<div class="bill-preview"><div><span>Current baaki</span><strong>' + money(due) + '</strong></div><div><span>Jama amount</span><strong class="preview-clear">' + money(collectionDraft.amount) + '</strong></div></div>' +
       '<div class="form-grid-two">' + field('Jama amount (₹)', 'collection-amount', collectionDraft.amount, { type: 'number', min: '0.01', step: 'any', required: true, placeholder: '0' }) + field('Payment mode', 'collection-mode', collectionDraft.mode, { select: modes }) + '</div>' +
       field('Note (optional)', 'collection-note', collectionDraft.note, { placeholder: 'Koi extra details...' }) +
       (collectionError ? '<div class="form-error" role="alert">' + escapeHtml(collectionError) + '</div>' : '') +
-      '<div class="modal-actions"><button type="button" class="secondary-button" data-action="close-collection">Cancel</button><button type="submit" class="primary-button">' + svg('check', 16) + (isEdit ? ' Changes save karein' : ' Jama save karein') + '</button></div></form></section></div>';
+      '<div class="modal-actions"><button type="button" class="secondary-button" data-action="close-collection">Cancel</button><button type="submit" class="primary-button">' + svg('check', 16) + (isEdit ? ' Changes save karein' : ' Jama save karein') + '</button></div></form></section></section>';
   }
   function confirmModalHtml() {
     if (!deleteTarget) return '';
     const label = deleteTarget.type === 'sale' ? 'sale entry' : 'jama entry';
-    return '<div class="modal-backdrop" data-action="dismiss-delete"><section class="modal-card confirm-modal" role="dialog" aria-modal="true" aria-labelledby="delete-title"><button class="modal-close confirm-close" data-action="cancel-delete" aria-label="Close dialog">' + svg('close', 16) + '</button><span class="confirm-icon">' + svg('trash', 21) + '</span><h2 id="delete-title">Entry delete karein?</h2><p>Yeh ' + label + ' permanently delete ho jayegi. Is action ko undo nahi kar sakte.</p><div class="modal-actions"><button class="secondary-button" data-action="cancel-delete">Cancel</button><button class="delete-confirm-button" data-action="confirm-delete">' + svg('trash', 15) + ' Haan, delete karein</button></div></section></div>';
+    return '<section class="entry-page"><section class="entry-page-card confirm-page" aria-labelledby="delete-title"><button class="modal-close confirm-close" data-action="cancel-delete" aria-label="Close dialog">' + svg('close', 16) + '</button><span class="confirm-icon">' + svg('trash', 21) + '</span><h2 id="delete-title">Entry delete karein?</h2><p>Yeh ' + label + ' permanently delete ho jayegi. Is action ko undo nahi kar sakte.</p><div class="modal-actions"><button class="secondary-button" data-action="cancel-delete">Cancel</button><button class="delete-confirm-button" data-action="confirm-delete">' + svg('trash', 15) + ' Haan, delete karein</button></div></section></div>';
   }
 
   function shellHtml(content) {
@@ -427,7 +427,11 @@
     if (tab === 'udhaar') content = udhaarHtml();
     if (tab === 'history') content = historyHtml();
     if (tab === 'guide') content = guideHtml();
-    app.innerHTML = shellHtml(content) + saleModalHtml() + collectionModalHtml() + confirmModalHtml();
+    // Entry forms and delete confirmation are full app pages, never overlay popups.
+    if (saleDialog) content = saleModalHtml();
+    else if (collectionDialog) content = collectionModalHtml();
+    else if (deleteTarget) content = confirmModalHtml();
+    app.innerHTML = shellHtml(content);
     // Bind the entry buttons directly after each render; avoids delegated-click conflicts.
     app.querySelectorAll('[data-action="new-sale"]').forEach(button => {
       button.addEventListener('click', event => {
@@ -631,6 +635,8 @@
     const target = event.target.closest('[data-action]');
     if (!target) { if (!event.target.closest('.native-language-picker')) app.querySelectorAll('.language-menu').forEach(menu => { menu.hidden = true; }); return; }
     const action = target.dataset.action;
+    if (action === 'toggle-language') { const menu = app.querySelector('[data-language-menu]'); if (menu) menu.hidden = !menu.hidden; return; }
+    if (action.startsWith('set-language:')) { setLanguage(action.slice(13)); return; }
     if (action === 'toggle-theme') { const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = next; try { localStorage.setItem('dukaandesk.theme.v1', next); } catch (error) {} render(); return; }
     if (action === 'dismiss-sale' && event.target === target) { closeSale(); return; }
     if (action === 'dismiss-collection' && event.target === target) { closeCollection(); return; }

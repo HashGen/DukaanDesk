@@ -256,3 +256,27 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .flow-diagram{direction:rt
  .entry-page-card .form-grid-two{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px}
  .entry-page-card .modal-actions{padding-bottom:calc(12px + env(safe-area-inset-bottom))}
 }
+
+
+/* Restore the compact language globe control in the header. */
+.topbar-actions .header-language-picker,
+.topbar-actions .native-language-picker{
+  display:flex!important;visibility:visible!important;opacity:1!important;
+  position:relative!important;flex:0 0 40px!important;
+  width:40px!important;min-width:40px!important;max-width:40px!important;
+  height:44px!important;min-height:44px!important;overflow:visible!important;
+  align-items:center!important;justify-content:center!important;
+  border:0!important;background:transparent!important;box-shadow:none!important;
+}
+.topbar-actions .native-language-picker .language-trigger{
+  display:flex!important;visibility:visible!important;opacity:1!important;
+  align-items:center!important;justify-content:center!important;
+  width:40px!important;height:44px!important;min-width:40px!important;
+  border:0!important;border-radius:12px!important;background:transparent!important;
+  color:var(--ink,#315743)!important;cursor:pointer!important;
+}
+.topbar-actions .native-language-picker .language-trigger svg{
+  display:block!important;width:23px!important;height:23px!important;
+  stroke:currentColor!important;fill:none!important;
+}
+.topbar-actions .native-language-picker .app-select-menu[hidden]{display:none!important}

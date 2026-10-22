@@ -468,3 +468,20 @@ button:disabled{transform:none!important;box-shadow:none!important;filter:none!i
 @media(prefers-reduced-motion:reduce){
   button,.custom-select-trigger{transition:none!important}
 }
+
+
+/* Unit/payment dropdowns open from the same header edge as the language menu. */
+html body .custom-select-menu{
+  position:fixed!important;
+  top:var(--language-menu-top,176px)!important;
+  left:50%!important;right:auto!important;bottom:auto!important;
+  transform:translateX(-50%)!important;
+  width:min(340px,calc(100vw - 32px))!important;
+  max-width:calc(100vw - 32px)!important;
+  max-height:calc(100dvh - var(--language-menu-top,176px) - 100px)!important;
+  border-top:0!important;border-radius:0 0 18px 18px!important;
+  clip-path:inset(0 0 100% 0 round 0 0 18px 18px)!important;
+}
+html body .custom-select-menu.language-menu-opening{
+  clip-path:inset(0 0 0 0 round 0 0 18px 18px)!important;
+}

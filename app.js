@@ -587,6 +587,15 @@
     const field = event.target;
     if (field && field.matches('[data-field="language"]')) setLanguage(field.value);
   });
+  // Reliable capture-phase handling for the primary sale and udhaar actions.
+  app.addEventListener('click', event => {
+    const actionButton = event.target.closest('[data-action="new-sale"], [data-action="new-collection"]');
+    if (!actionButton || !app.contains(actionButton)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (actionButton.dataset.action === 'new-sale') openSale();
+    else openCollection();
+  }, true);
   app.addEventListener('click', event => {
     const target = event.target.closest('[data-action]');
     if (!target) { if (!event.target.closest('.native-language-picker')) app.querySelectorAll('.language-menu').forEach(menu => { menu.hidden = true; }); return; }

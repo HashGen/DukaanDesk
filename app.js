@@ -333,11 +333,14 @@
     const labelSuffix = options.required ? ' <i>*</i>' : (options.optional ? ' <small>optional</small>' : '');
     let control = '';
     if (Array.isArray(options.select)) {
-      control = '<select id="' + safeId + '" name="' + safeId + '" data-field="' + safeId + '"' + required + '>' +
+      control = '<div class="custom-select-field" data-custom-select="' + safeId + '">' +
+        '<button type="button" class="custom-select-trigger" data-action="toggle-select:' + safeId + '" aria-haspopup="listbox" aria-expanded="false">' +
+        '<span>' + escapeHtml(value == null ? '' : value) + '</span><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>' +
+        '<div class="app-select-menu custom-select-menu" data-select-menu="' + safeId + '" role="listbox" hidden>' +
         options.select.map(function (option) {
           const selected = String(option) === String(value) ? ' selected' : '';
-          return '<option value="' + escapeHtml(option) + '"' + selected + '>' + escapeHtml(option) + '</option>';
-        }).join('') + '</select>';
+          return '<button type="button" role="option" aria-selected="' + (selected ? 'true' : 'false') + '" class="language-option custom-select-option' + selected + '" data-action="select-value:' + safeId + ':' + encodeURIComponent(option) + '">' + escapeHtml(option) + '</button>';
+        }).join('') + '</div></div>';
     } else {
       const type = ['text', 'date', 'number', 'email', 'tel'].includes(options.type) ? options.type : 'text';
       const placeholder = options.placeholder ? ' placeholder="' + escapeHtml(options.placeholder) + '"' : '';
@@ -635,6 +638,44 @@
     const target = event.target.closest('[data-action]');
     if (!target) { if (!event.target.closest('.native-language-picker')) app.querySelectorAll('.language-menu').forEach(menu => { menu.hidden = true; }); return; }
     const action = target.dataset.action;
+    if (action.startsWith('toggle-select:')) {
+      const id = action.slice('toggle-select:'.length);
+      const wrap = target.closest('.custom-select-field');
+      const menu = wrap && wrap.querySelector('[data-select-menu]');
+      if (!menu) return;
+      const opening = menu.hidden;
+      app.querySelectorAll('.custom-select-menu').forEach(item => { item.hidden = true; item.classList.remove('language-menu-opening'); });
+      if (opening) {
+        const rect = target.getBoundingClientRect();
+        menu.style.setProperty('--select-menu-top', rect.bottom + 'px');
+        menu.style.setProperty('--select-menu-left', rect.left + 'px');
+        menu.style.setProperty('--select-menu-width', rect.width + 'px');
+        menu.style.top = rect.bottom + 'px';
+        menu.hidden = false;
+        target.setAttribute('aria-expanded','true');
+        menu.classList.remove('language-menu-opening');
+        void menu.offsetWidth;
+        menu.classList.add('language-menu-opening');
+      } else {
+        target.setAttribute('aria-expanded','false');
+      }
+      return;
+    }
+    if (action.startsWith('select-value:')) {
+      const parts = action.split(':');
+      const id = parts[1];
+      let value = '';
+      try { value = decodeURIComponent(parts.slice(2).join(':')); } catch (error) { value = parts.slice(2).join(':'); }
+      const map = { 'sale-unit': ['sale', 'unit'], 'sale-mode': ['sale', 'paymentMode'], 'collection-mode': ['collection', 'mode'] };
+      const found = map[id];
+      if (found) {
+        const draft = found[0] === 'sale' ? saleDraft : collectionDraft;
+        draft[found[1]] = value;
+        if (found[0] === 'sale') saleError = ''; else collectionError = '';
+        render();
+      }
+      return;
+    }
     if (action === 'toggle-language') {
       const menu = app.querySelector('[data-language-menu]');
       if (menu) {

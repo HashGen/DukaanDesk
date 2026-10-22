@@ -350,3 +350,24 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .flow-diagram{direction:rt
   border-top:0!important;
   box-shadow:0 12px 28px rgba(15,35,22,.14)!important;
 }
+
+
+/* Final override: language list is attached directly under the header, not centered over the page. */
+html body .topbar-actions .native-language-picker .app-select-menu,
+html body .native-language-picker .app-select-menu{
+  position:fixed!important;
+  top:var(--language-menu-top, 176px)!important;
+  left:50%!important;right:auto!important;bottom:auto!important;
+  transform:translateX(-50%)!important;
+  width: min(340px, calc(100vw - 32px))!important;
+  min-width:0!important;max-width:calc(100vw - 32px)!important;
+  max-height:calc(100dvh - var(--language-menu-top, 176px) - 100px)!important;
+  margin:0!important;padding:8px!important;
+  overflow-y:auto!important;overflow-x:hidden!important;
+  border:1px solid var(--line,#dce5db)!important;
+  border-top:0!important;
+  border-radius:0 0 18px 18px!important;
+  background:var(--paper,#fff)!important;
+  box-shadow:0 12px 28px rgba(15,35,22,.14)!important;
+  z-index:99999!important;
+}

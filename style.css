@@ -141,3 +141,6 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .flow-diagram{direction:rt
 .topbar-actions .native-language-picker .language-globe svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .topbar-actions .native-language-picker select{position:absolute;inset:0;width:100%!important;height:100%!important;max-width:100%!important;opacity:0;cursor:pointer;z-index:2;padding:0!important}
 @media(max-width:620px){.topbar-actions .native-language-picker{flex:0 0 36px!important;width:36px!important;min-width:36px!important;max-width:36px!important;height:38px}.topbar-actions .native-language-picker .language-globe svg{width:21px;height:21px}}
+
+/* Remove the extra dropdown chevron; the globe itself opens the language selector. */
+.topbar-actions .native-language-picker:after{content:none!important;display:none!important}

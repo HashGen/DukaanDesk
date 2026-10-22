@@ -324,6 +324,31 @@
       '<section class="panel guide-section"><div class="panel-heading"><div><h3>' + tr('safety') + '</h3><p>' + tr('safetyIntro') + '</p></div>' + svg('shield',20) + '</div><div class="safety-grid"><div>' + svg('check',17) + '<span><b>' + tr('autosave') + ':</b> ' + tr('autosaveDesc') + '</span></div><div>' + svg('download',17) + '<span><b>' + tr('backup') + ':</b> ' + tr('backupDesc') + '</span></div><div>' + svg('shield',17) + '<span>' + tr('privacyNote') + '</span></div></div><button class="secondary-button guide-backup-button" data-action="backup">' + svg('download',15) + tr('backup') + '</button></section>' +
       '<section class="panel guide-section source-panel"><div class="panel-heading"><div><h3>' + tr('source') + '</h3><p>' + tr('sourceDesc') + '</p></div><span class="source-badge">HTML + CSS + JS</span></div><div class="source-files"><span><code>index.html</code><small>App structure</small></span><span><code>style.css</code><small>Responsive design</small></span><span><code>app.js</code><small>Sales, credit, history, localStorage</small></span><span><code>README.md</code><small>Setup instructions</small></span></div><button class="primary-button source-download-button" data-action="source">' + svg('download',17) + tr('sourceZip') + '</button></section></section>';
   }
+  function field(label, id, value, options) {
+    options = options || {};
+    const safeLabel = escapeHtml(label);
+    const safeId = escapeHtml(id);
+    const safeValue = escapeHtml(value == null ? '' : value);
+    const required = options.required ? ' required aria-required="true"' : '';
+    const labelSuffix = options.required ? ' <i>*</i>' : (options.optional ? ' <small>optional</small>' : '');
+    let control = '';
+    if (Array.isArray(options.select)) {
+      control = '<select id="' + safeId + '" name="' + safeId + '" data-field="' + safeId + '"' + required + '>' +
+        options.select.map(function (option) {
+          const selected = String(option) === String(value) ? ' selected' : '';
+          return '<option value="' + escapeHtml(option) + '"' + selected + '>' + escapeHtml(option) + '</option>';
+        }).join('') + '</select>';
+    } else {
+      const type = ['text', 'date', 'number', 'email', 'tel'].includes(options.type) ? options.type : 'text';
+      const placeholder = options.placeholder ? ' placeholder="' + escapeHtml(options.placeholder) + '"' : '';
+      const min = options.min != null ? ' min="' + escapeHtml(options.min) + '"' : '';
+      const step = options.step != null ? ' step="' + escapeHtml(options.step) + '"' : '';
+      const list = options.list ? ' list="' + escapeHtml(options.list) + '"' : '';
+      control = '<input id="' + safeId + '" name="' + safeId + '" data-field="' + safeId + '" type="' + type + '" value="' + safeValue + '"' + placeholder + min + step + list + required + ' autocomplete="off">';
+    }
+    return '<label class="form-field" for="' + safeId + '"><span>' + safeLabel + labelSuffix + '</span>' + control + '</label>';
+  }
+
   function saleModalHtml() {
     if (!saleDialog) return '';
     const isEdit = Boolean(editingSaleId);

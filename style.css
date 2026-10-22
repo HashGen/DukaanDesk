@@ -609,3 +609,26 @@ html body .custom-select-menu.language-menu-opening{
   .entry-page-card .modal-actions button{min-height:48px!important}
   body:has(.entry-page) #app{padding-bottom:0!important}
 }
+
+
+/* Eliminate blank strips around the full-screen entry page. */
+@media(max-width:700px){
+  body:has(.entry-page){margin:0!important}
+  body:has(.entry-page) #app{margin:0!important;padding:0!important}
+  .entry-page{
+    margin:0!important;padding:0 0 calc(72px + env(safe-area-inset-bottom))!important;
+    min-height:0!important;height:auto!important;
+    background:var(--paper,#fff)!important;
+  }
+  .entry-page-card{
+    margin:0!important;padding:16px 16px 18px!important;
+    min-height:0!important;height:auto!important;
+    background:var(--paper,#fff)!important;
+  }
+  .entry-page-card .modal-heading{margin-top:0!important;padding-top:0!important}
+  .entry-page-card .modal-form{margin-top:0!important;padding-top:0!important;gap:11px!important}
+  .entry-page-card .modal-actions{
+    position:fixed!important;bottom:0!important;
+    padding:9px 14px calc(9px + env(safe-area-inset-bottom))!important;
+  }
+}

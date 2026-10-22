@@ -240,8 +240,8 @@
       weekData.map(day => '<div class="bar-column" title="' + day.iso + ': ' + money(day.amount) + '"><span class="bar-value">' + (day.amount > 0 ? money(day.amount) : '') + '</span><div class="bar-track"><div class="bar-fill ' + (day.iso === today ? 'bar-today' : '') + '" style="height:' + Math.max(day.amount > 0 ? 8 : 3, (day.amount / weekMax) * 100) + '%"></div></div><span class="bar-label ' + (day.iso === today ? 'bar-label-today' : '') + '">' + day.label + '</span></div>').join('') +
       '</div><div class="chart-foot"><span><span class="legend-dot"></span> Daily sales</span><span><span class="legend-dot legend-today"></span> Today</span></div></section>' +
       '<section class="panel quick-panel"><div class="panel-heading"><div><h3>Quick actions</h3><p>Roz ke kaam, ek tap mein</p></div><span class="panel-heading-icon">' + svg('activity', 17) + '</span></div>' +
-      '<button type="button" class="quick-action" data-action="new-sale" onclick="window.__dukaanOpenSale(); return false;"><span class="quick-icon quick-icon-green">' + svg('plus', 18) + '</span><span class="quick-copy"><strong>Nayi bikri add karein</strong><small>Item, quantity aur payment save karein</small></span>' + svg('trend', 17) + '</button>' +
-      '<button type="button" class="quick-action" data-action="new-collection" onclick="window.__dukaanOpenCollection(); return false;"><span class="quick-icon quick-icon-orange">' + svg('down', 18) + '</span><span class="quick-copy"><strong>Udhaar jama karein</strong><small>Customer se mila paisa record karein</small></span>' + svg('trend', 17) + '</button>' +
+      '<button type="button" class="quick-action" data-action="new-sale" onclick="window.__dukaanOpenSale(); event.stopPropagation(); return false;"><span class="quick-icon quick-icon-green">' + svg('plus', 18) + '</span><span class="quick-copy"><strong>Nayi bikri add karein</strong><small>Item, quantity aur payment save karein</small></span>' + svg('trend', 17) + '</button>' +
+      '<button type="button" class="quick-action" data-action="new-collection" onclick="window.__dukaanOpenCollection(); event.stopPropagation(); return false;"><span class="quick-icon quick-icon-orange">' + svg('down', 18) + '</span><span class="quick-copy"><strong>Udhaar jama karein</strong><small>Customer se mila paisa record karein</small></span>' + svg('trend', 17) + '</button>' +
       '<button class="quick-action" data-action="tab:history"><span class="quick-icon quick-icon-blue">' + svg('file', 18) + '</span><span class="quick-copy"><strong>Purana hisaab dekhein</strong><small>Kisi bhi din ki entry kholein</small></span>' + svg('trend', 17) + '</button>' +
       '<div class="quick-foot">' + svg('shield', 14) + '<span>Har change aapke device mein auto-save hota hai.</span></div></section></div>' +
       '<section class="panel recent-panel"><div class="panel-heading panel-heading-row"><div><h3>Recent entries</h3><p>Aapki latest saved bikri</p></div><button class="text-link" data-action="tab:transactions">Saari entries ↗</button></div>' +
@@ -587,15 +587,6 @@
     const field = event.target;
     if (field && field.matches('[data-field="language"]')) setLanguage(field.value);
   });
-  // Reliable capture-phase handling for the primary sale and udhaar actions.
-  app.addEventListener('click', event => {
-    const actionButton = event.target.closest('[data-action="new-sale"], [data-action="new-collection"]');
-    if (!actionButton || !app.contains(actionButton)) return;
-    event.preventDefault();
-    event.stopPropagation();
-    if (actionButton.dataset.action === 'new-sale') openSale();
-    else openCollection();
-  }, true);
   app.addEventListener('click', event => {
     const target = event.target.closest('[data-action]');
     if (!target) { if (!event.target.closest('.native-language-picker')) app.querySelectorAll('.language-menu').forEach(menu => { menu.hidden = true; }); return; }

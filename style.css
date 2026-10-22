@@ -144,3 +144,88 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .flow-diagram{direction:rt
 
 /* Remove the extra dropdown chevron; the globe itself opens the language selector. */
 .topbar-actions .native-language-picker:after{content:none!important;display:none!important}
+
+
+/* Mobile polish: give the header its available width and keep entry forms inside the viewport. */
+@media(max-width:620px){
+  .topbar{
+    height:76px!important;min-height:76px!important;
+    padding:0 12px!important;gap:10px!important;
+    display:flex!important;align-items:center!important;
+  }
+  .topbar-title-wrap{
+    flex:1 1 auto!important;min-width:0!important;max-width:none!important;
+  }
+  .mobile-brand{gap:8px!important;min-width:0!important}
+  .mobile-brand .brand-mark{
+    width:38px!important;height:38px!important;flex:0 0 38px!important;
+    border-radius:12px!important;
+  }
+  .mobile-brand .brand-mark .icon svg{width:22px!important;height:22px!important}
+  .mobile-brand strong{
+    font-size:clamp(14px,4vw,17px)!important;letter-spacing:-.35px!important;
+    white-space:nowrap!important;
+  }
+  .topbar-actions{
+    flex:0 0 auto!important;width:auto!important;max-width:none!important;
+    gap:8px!important;margin-left:auto!important;
+  }
+  .topbar-actions .native-language-picker{
+    flex:0 0 38px!important;width:38px!important;min-width:38px!important;max-width:38px!important;
+    height:42px!important;
+  }
+  .topbar-actions .theme-toggle{
+    flex:0 0 42px!important;width:42px!important;min-width:42px!important;max-width:42px!important;
+    height:44px!important;min-height:44px!important;
+  }
+  .topbar-actions .primary-button{
+    flex:0 0 46px!important;width:46px!important;min-width:46px!important;max-width:46px!important;
+    height:48px!important;min-height:48px!important;padding:0!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+  }
+  .topbar-actions .primary-button .icon{margin:0!important}
+  .topbar-actions .primary-button>span:not(.icon){display:none!important}
+  .modal-backdrop{
+    position:fixed!important;inset:0!important;z-index:1000!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    padding:calc(12px + env(safe-area-inset-top)) 10px calc(12px + env(safe-area-inset-bottom))!important;
+    overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;
+  }
+  .modal-card{
+    width:100%!important;max-width:540px!important;
+    max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom))!important;
+    overflow-x:hidden!important;overflow-y:auto!important;
+    padding:20px 16px!important;border-radius:16px!important;
+    margin:auto!important;
+  }
+  .modal-heading{gap:10px!important;padding-bottom:14px!important;margin-bottom:14px!important}
+  .modal-heading h2{font-size:20px!important}
+  .modal-form{gap:12px!important}
+  .form-grid-three{grid-template-columns:minmax(0,1fr) minmax(0,.9fr) minmax(0,1.05fr)!important;gap:8px!important}
+  .form-grid-two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:10px!important}
+  .form-field{min-width:0!important;font-size:12px!important}
+  .form-field>span{font-size:12px!important;line-height:1.35!important;flex-wrap:wrap}
+  .form-field input,.form-field select{height:46px!important;font-size:15px!important;padding:0 10px!important;min-width:0!important}
+  .bill-preview{padding:14px 12px!important;gap:8px!important}
+  .bill-preview span{font-size:11px!important}
+  .bill-preview strong{font-size:18px!important}
+  .modal-actions{
+    position:sticky!important;bottom:-20px!important;
+    background:#fff!important;padding:12px 0 2px!important;
+    display:flex!important;gap:8px!important;
+  }
+  .modal-actions button{min-height:44px!important;font-size:13px!important;flex:1 1 0!important}
+  .modal-actions .primary-button{justify-content:center!important}
+}
+@media(max-width:370px){
+  .topbar{padding:0 7px!important;gap:5px!important}
+  .mobile-brand{gap:5px!important}
+  .mobile-brand .brand-mark{width:32px!important;height:32px!important;flex-basis:32px!important}
+  .mobile-brand strong{font-size:13px!important}
+  .topbar-actions{gap:5px!important}
+  .topbar-actions .native-language-picker{flex-basis:34px!important;width:34px!important;min-width:34px!important}
+  .topbar-actions .theme-toggle{flex-basis:37px!important;width:37px!important;min-width:37px!important}
+  .topbar-actions .primary-button{flex-basis:40px!important;width:40px!important;min-width:40px!important}
+  .form-grid-three{grid-template-columns:minmax(0,1fr) minmax(0,.9fr) minmax(0,1fr)!important;gap:5px!important}
+  .form-field input,.form-field select{padding:0 7px!important;font-size:14px!important}
+}

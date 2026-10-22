@@ -584,3 +584,28 @@ html body .custom-select-menu.language-menu-opening{
 /* Only one chevron on the custom Unit button. */
 .form-grid-three .form-field:nth-child(2):after{content:none!important;display:none!important}
 .custom-select-trigger svg{display:block!important}
+
+
+/* Remove unused outer gutters and excess vertical height on the full-screen sale page. */
+@media(max-width:700px){
+  .entry-page{
+    width:100vw!important;max-width:none!important;
+    margin:0 calc(50% - 50vw)!important;
+    padding:0 0 calc(82px + env(safe-area-inset-bottom))!important;
+    min-height:0!important;
+  }
+  .entry-page-card{
+    width:100%!important;min-height:0!important;
+    margin:0!important;padding:18px 16px 24px!important;
+    border:0!important;border-radius:0!important;
+    box-shadow:none!important;background:var(--paper,#fff)!important;
+  }
+  .entry-page-card .modal-form{gap:12px!important}
+  .entry-page-card .modal-heading{margin-bottom:0!important}
+  .entry-page-card .modal-actions{
+    bottom:0!important;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom))!important;
+  }
+  .entry-page-card .modal-actions button{min-height:48px!important}
+  body:has(.entry-page) #app{padding-bottom:0!important}
+}

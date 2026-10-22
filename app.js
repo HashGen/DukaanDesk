@@ -385,7 +385,7 @@
   function confirmModalHtml() {
     if (!deleteTarget) return '';
     const label = deleteTarget.type === 'sale' ? 'sale entry' : 'jama entry';
-    return '<section class="entry-page"><section class="entry-page-card confirm-page" aria-labelledby="delete-title"><button class="modal-close confirm-close" data-action="cancel-delete" aria-label="Close dialog">' + svg('close', 16) + '</button><span class="confirm-icon">' + svg('trash', 21) + '</span><h2 id="delete-title">Entry delete karein?</h2><p>Yeh ' + label + ' permanently delete ho jayegi. Is action ko undo nahi kar sakte.</p><div class="modal-actions"><button class="secondary-button" data-action="cancel-delete">Cancel</button><button class="delete-confirm-button" data-action="confirm-delete">' + svg('trash', 15) + ' Haan, delete karein</button></div></section></div>';
+    return '<section class="entry-page"><section class="entry-page-card confirm-page" aria-labelledby="delete-title"><button class="modal-close confirm-close" data-action="cancel-delete" aria-label="Close dialog">' + svg('close', 16) + '</button><span class="confirm-icon">' + svg('trash', 21) + '</span><h2 id="delete-title">Entry delete karein?</h2><p>Yeh ' + label + ' permanently delete ho jayegi. Is action ko undo nahi kar sakte.</p><div class="modal-actions"><button class="secondary-button" data-action="cancel-delete">Cancel</button><button class="delete-confirm-button" data-action="confirm-delete">' + svg('trash', 15) + ' Haan, delete karein</button></div></section></section>';
   }
 
   function shellHtml(content) {

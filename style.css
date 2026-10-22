@@ -340,3 +340,13 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .flow-diagram{direction:rt
   border-right:1.8px solid var(--muted,#64756a);border-bottom:1.8px solid var(--muted,#64756a);
   transform:rotate(45deg);pointer-events:none;
 }
+
+
+/* Flush language dropdown to the exact bottom edge of the header. */
+.topbar-actions .native-language-picker .app-select-menu,
+.native-language-picker .app-select-menu{
+  margin:0!important;
+  border-top-left-radius:0!important;border-top-right-radius:0!important;
+  border-top:0!important;
+  box-shadow:0 12px 28px rgba(15,35,22,.14)!important;
+}

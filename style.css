@@ -1033,3 +1033,31 @@ html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!import
     word-break: normal !important;
   }
 }
+
+
+/* Dropdown positioning fix for mobile and Android Chrome desktop-site mode. */
+@media (max-width: 1000px) {
+  html body #app .native-language-picker .app-select-menu,
+  html body #app .custom-select-menu {
+    position: fixed !important;
+    top: var(--language-menu-top, var(--dropdown-header-bottom, 78px)) !important;
+    left: 50vw !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: min(460px, calc(100vw - 28px)) !important;
+    min-width: 0 !important;
+    max-width: calc(100vw - 28px) !important;
+    max-height: calc(100dvh - var(--language-menu-top, 78px) - 16px) !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    transform: translateX(-50%) !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    z-index: 99999 !important;
+  }
+  html body #app .native-language-picker .app-select-menu[hidden],
+  html body #app .custom-select-menu[hidden] {
+    display: none !important;
+  }
+}

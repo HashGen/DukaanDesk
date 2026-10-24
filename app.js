@@ -718,7 +718,9 @@
           menu.style.setProperty('z-index', '999999', 'important');
           menu.style.setProperty('border-top-left-radius', '0', 'important');
           menu.style.setProperty('border-top-right-radius', '0', 'important');
-          menu.style.setProperty('border', '0', 'important');
+          menu.style.setProperty('border', '0 1px 1px', 'important');
+          menu.style.setProperty('border-top', '0', 'important');
+          menu.style.setProperty('border-color', '#e5ebe5', 'important');
           menu.style.setProperty('animation', 'languageDropdownEnter 420ms cubic-bezier(.16,1,.3,1) both', 'important');
           document.documentElement.style.overflow = 'hidden';
           document.body.style.overflow = 'hidden';

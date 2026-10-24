@@ -658,21 +658,44 @@
       const menu = wrap && wrap.querySelector('[data-select-menu]');
       if (!menu) return;
       const opening = menu.hidden;
-      app.querySelectorAll('.custom-select-menu').forEach(item => { item.hidden = true; item.classList.remove('language-menu-opening'); });
+      document.querySelectorAll('.custom-select-menu').forEach(item => {
+        item.hidden = true;
+        item.classList.remove('language-menu-opening');
+      });
       if (opening) {
         const header = app.querySelector('.topbar');
         const headerBottom = header ? header.getBoundingClientRect().bottom : 176;
-        menu.style.setProperty('--language-menu-top', Math.max(0, headerBottom) + 'px');
-        menu.style.top = Math.max(0, headerBottom) + 'px';
-        menu.style.setProperty('--select-menu-left', '16px');
-        menu.style.setProperty('--select-menu-width', 'calc(100vw - 32px)');
+        if (menu.parentElement !== document.body) document.body.appendChild(menu);
         menu.hidden = false;
+        menu.style.setProperty('--language-menu-top', Math.max(0, headerBottom) + 'px', 'important');
+        menu.style.setProperty('position', 'fixed', 'important');
+        menu.style.setProperty('top', Math.max(0, headerBottom) + 'px', 'important');
+        menu.style.setProperty('left', '50vw', 'important');
+        menu.style.setProperty('right', 'auto', 'important');
+        menu.style.setProperty('width', 'min(340px, calc(100vw - 40px))', 'important');
+        menu.style.setProperty('max-width', 'min(340px, calc(100vw - 40px))', 'important');
+        menu.style.setProperty('max-height', 'calc(100dvh - ' + Math.max(0, headerBottom) + 'px)', 'important');
+        menu.style.setProperty('overflow-y', 'auto', 'important');
+        menu.style.setProperty('overscroll-behavior', 'contain', 'important');
+        menu.style.setProperty('touch-action', 'pan-y', 'important');
+        menu.style.setProperty('transform', 'translateX(-50%)', 'important');
+        menu.style.setProperty('margin', '0', 'important');
+        menu.style.setProperty('z-index', '999999', 'important');
+        menu.style.setProperty('border', '0', 'important');
+        menu.style.setProperty('border-top', '0', 'important');
+        menu.style.setProperty('border-radius', '0 0 16px 16px', 'important');
+        menu.style.setProperty('animation', 'languageDropdownEnter 460ms cubic-bezier(.16,1,.3,1) both', 'important');
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
         target.setAttribute('aria-expanded','true');
         menu.classList.remove('language-menu-opening');
         void menu.offsetWidth;
         menu.classList.add('language-menu-opening');
       } else {
+        menu.hidden = true;
         target.setAttribute('aria-expanded','false');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
       }
       return;
     }

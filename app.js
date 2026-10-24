@@ -663,6 +663,7 @@
         item.classList.remove('language-menu-opening');
       });
       if (opening) {
+        if (document.activeElement && document.activeElement.matches('input, textarea')) document.activeElement.blur();
         const header = app.querySelector('.topbar');
         const headerBottom = header ? header.getBoundingClientRect().bottom : 176;
         if (menu.parentElement !== document.body) document.body.appendChild(menu);
@@ -700,6 +701,7 @@
       return;
     }
     if (action.startsWith('select-value:')) {
+      if (document.activeElement && document.activeElement.matches('input, textarea')) document.activeElement.blur();
       document.querySelectorAll('.custom-select-menu').forEach(item => item.remove());
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';

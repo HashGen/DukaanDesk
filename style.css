@@ -1190,3 +1190,28 @@ body > .language-menu.app-select-menu {
   overscroll-behavior-y: contain !important;
   -webkit-overflow-scrolling: touch;
 }
+
+
+/* Native app spacing: add breathing room without shifting fixed navigation over content. */
+@media (max-width: 700px) {
+  html body .workspace {
+    padding-top: calc(env(safe-area-inset-top) + 10px) !important;
+  }
+
+  html body .topbar {
+    margin-top: 8px !important;
+  }
+
+  html body .main-content {
+    padding-top: 30px !important;
+    padding-bottom: 34px !important;
+  }
+
+  html body .app-shell {
+    padding-bottom: calc(104px + env(safe-area-inset-bottom)) !important;
+  }
+
+  html body .mobile-nav {
+    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+  }
+}

@@ -1178,3 +1178,15 @@ body > .language-menu.app-select-menu .language-option {
   padding-right: 14px !important;
   white-space: nowrap !important;
 }
+
+
+/* Keep every open dropdown to half the visible screen; remaining options scroll inside it. */
+body > .custom-select-menu.app-select-menu,
+body > .app-select-menu.custom-select-menu,
+body > .language-menu.app-select-menu {
+  max-height: 45vh !important;
+  max-height: min(45vh, 360px) !important;
+  overflow-y: auto !important;
+  overscroll-behavior-y: contain !important;
+  -webkit-overflow-scrolling: touch;
+}

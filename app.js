@@ -700,6 +700,9 @@
       return;
     }
     if (action.startsWith('select-value:')) {
+      document.querySelectorAll('.custom-select-menu').forEach(item => item.remove());
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
       const parts = action.split(':');
       const id = parts[1];
       let value = '';

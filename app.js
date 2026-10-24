@@ -646,6 +646,8 @@
     if (!target) {
       if (!event.target.closest('.native-language-picker') && !event.target.closest('[data-language-menu]')) {
         document.querySelectorAll('.language-menu').forEach(menu => { menu.hidden = true; });
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
       }
       return;
     }
@@ -704,21 +706,35 @@
           menu.style.position = 'fixed';
           menu.style.left = '50vw';
           menu.style.right = 'auto';
-          menu.style.width = 'min(460px, calc(100vw - 28px))';
-          menu.style.maxWidth = 'calc(100vw - 28px)';
+          menu.style.width = 'min(320px, calc(100vw - 40px))';
+          menu.style.maxWidth = 'calc(100vw - 40px)';
+          menu.style.maxHeight = 'calc(100dvh - ' + headerBottom + 'px)';
+          menu.style.overflowY = 'auto';
+          menu.style.overscrollBehavior = 'contain';
+          menu.style.touchAction = 'pan-y';
           menu.style.transform = 'translateX(-50%)';
           menu.style.margin = '0';
           menu.style.zIndex = '999999';
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+          menu.addEventListener('touchmove', function (touchEvent) { touchEvent.stopPropagation(); }, { passive: true });
           menu.classList.remove('language-menu-opening');
           void menu.offsetWidth;
           menu.classList.add('language-menu-opening');
         } else {
           menu.classList.remove('language-menu-opening');
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
         }
       }
       return;
     }
-    if (action.startsWith('set-language:')) { setLanguage(action.slice(13)); return; }
+    if (action.startsWith('set-language:')) { 
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      setLanguage(action.slice(13)); 
+      return; 
+    }
     if (action === 'toggle-theme') { const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = next; try { localStorage.setItem('dukaandesk.theme.v1', next); } catch (error) {} render(); return; }
     if (action === 'dismiss-sale' && event.target === target) { closeSale(); return; }
     if (action === 'dismiss-collection' && event.target === target) { closeCollection(); return; }

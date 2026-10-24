@@ -1155,11 +1155,6 @@ body > .language-menu.app-select-menu .language-option {
 }
 
 
-/* Global title-case typography requested for DukaanDesk. */
-#app :is(h1,h2,h3,h4,h5,h6,p,span,strong,small,label,button,a,li,th,td,summary,legend,figcaption,.eyebrow,.metric-overline,.metric-caption,.panel-heading,.quick-copy,.form-field>span,.mobile-nav-link,.language-option,.custom-select-option) {
-  text-transform: capitalize;
-}
-
 /* Keep every custom dropdown consistent and center option labels. */
 body > .custom-select-menu.app-select-menu,
 body > .app-select-menu.custom-select-menu,

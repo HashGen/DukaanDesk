@@ -428,15 +428,16 @@
       for (const [source, translations] of entries) {
         const target = translations && translations[index];
         if (!target || source === target) continue;
-        // Match case-insensitively because visible labels may use Title Case.
-        // Keep translation keys independent from display capitalization.
-        const escapedSource = source.replace(/[.*+?^${}()|[\]\\]/g, '\\        if (out.trim() === source) return out.replace(source, target);
-        // Translate phrases embedded in a larger text node too, without touching markup.
-        out = out.split(source).join(target);');
-        const matcher = new RegExp(escapedSource, 'gi');
-        if (out.trim().toLowerCase() === source.toLowerCase()) return out.replace(matcher, target);
-        // Translate phrases embedded in a larger text node too, without touching markup.
-        out = out.replace(matcher, target);
+        // Match without case sensitivity so Title Case display text still translates.
+        let lowerOut = out.toLowerCase();
+        const lowerSource = source.toLowerCase();
+        let at = lowerOut.indexOf(lowerSource);
+        if (out.trim().toLowerCase() === lowerSource) return target;
+        while (at !== -1) {
+          out = out.slice(0, at) + target + out.slice(at + source.length);
+          lowerOut = out.toLowerCase();
+          at = lowerOut.indexOf(lowerSource, at + target.length);
+        }
       }
       return out;
     };

@@ -945,3 +945,25 @@ html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!import
     border-radius: 0 0 18px 18px !important;
   }
 }
+
+
+/* Mobile dropdown correction: keep menus centered within the viewport without
+   changing the document width or squeezing the dashboard underneath. */
+@media (max-width: 620px) {
+  html, body { max-width:100%; overflow-x:clip; }
+  html body .topbar-actions .native-language-picker .app-select-menu,
+  html body .native-language-picker .app-select-menu,
+  html body .custom-select-menu {
+    position:fixed!important;
+    left:14px!important;
+    right:14px!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+    transform:none!important;
+    margin:0!important;
+    top:var(--language-menu-top, 0px)!important;
+    z-index:99999!important;
+  }
+}

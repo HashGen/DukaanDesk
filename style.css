@@ -801,3 +801,18 @@ input,textarea,[contenteditable="true"]{
     transform:translateY(5px)!important;
   }
 }
+
+
+/* Remove the gap above the mobile header; keep header contents inset internally. */
+@media(max-width:1000px){
+  .topbar{
+    margin-top:0!important;
+    margin-left:0!important;margin-right:0!important;
+    width:100%!important;
+    border-top-left-radius:0!important;border-top-right-radius:0!important;
+  }
+  .workspace{padding-top:0!important}
+}
+@media(max-width:620px){
+  .topbar{margin-top:0!important;width:100%!important}
+}

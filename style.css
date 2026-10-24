@@ -911,3 +911,37 @@ html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!import
   .language-menu::before, .dropdown-menu::before, .popover-menu::before,
   .menu-dropdown::before { display: none !important; }
 }
+
+
+/* Root cause fix: backdrop-filter on sticky header was trapping fixed dropdowns
+   inside the header, making them start at the language icon instead of viewport center. */
+@media (max-width: 620px) {
+  html body .topbar {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+    filter: none !important;
+    perspective: none !important;
+    contain: none !important;
+  }
+  html body .topbar-actions .native-language-picker .app-select-menu,
+  html body .native-language-picker .app-select-menu,
+  html body .custom-select-menu {
+    position: fixed !important;
+    left: 50vw !important;
+    right: auto !important;
+    width: calc(100vw - 28px) !important;
+    min-width: 0 !important;
+    max-width: calc(100vw - 28px) !important;
+    margin: 0 !important;
+    transform: translateX(-50%) !important;
+    top: var(--language-menu-top, 0px) !important;
+    z-index: 99999 !important;
+    box-sizing: border-box !important;
+  }
+  html body .topbar-actions .native-language-picker .app-select-menu,
+  html body .native-language-picker .app-select-menu {
+    border-top: 0 !important;
+    border-radius: 0 0 18px 18px !important;
+  }
+}

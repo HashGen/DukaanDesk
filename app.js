@@ -707,7 +707,8 @@
           menu.style.setProperty('right', 'auto', 'important');
           menu.style.setProperty('width', 'max-content', 'important');
           menu.style.setProperty('min-width', '0', 'important');
-          menu.style.setProperty('max-width', 'min(280px, calc(100vw - 40px))', 'important');
+          menu.style.setProperty('width', 'min(340px, calc(100vw - 40px))', 'important');
+          menu.style.setProperty('max-width', 'min(340px, calc(100vw - 40px))', 'important');
           menu.style.setProperty('max-height', 'calc(100dvh - ' + headerBottom + 'px)', 'important');
           menu.style.setProperty('overflow-y', 'auto', 'important');
           menu.style.setProperty('overscroll-behavior', 'contain', 'important');
@@ -717,7 +718,8 @@
           menu.style.setProperty('z-index', '999999', 'important');
           menu.style.setProperty('border-top-left-radius', '0', 'important');
           menu.style.setProperty('border-top-right-radius', '0', 'important');
-          menu.style.setProperty('animation', 'languageDropdownEnter 260ms cubic-bezier(.2,.8,.2,1) both', 'important');
+          menu.style.setProperty('border', '0', 'important');
+          menu.style.setProperty('animation', 'languageDropdownEnter 420ms cubic-bezier(.16,1,.3,1) both', 'important');
           document.documentElement.style.overflow = 'hidden';
           document.body.style.overflow = 'hidden';
           menu.addEventListener('touchmove', function (touchEvent) { touchEvent.stopPropagation(); }, { passive: true });
@@ -732,6 +734,29 @@
       return;
     }
     if (action.startsWith('set-language:')) {
+      const languageMenu = document.querySelector('[data-language-menu]');
+      if (languageMenu) {
+        languageMenu.hidden = true;
+        languageMenu.classList.remove('language-menu-opening');
+        languageMenu.style.removeProperty('animation');
+        languageMenu.style.removeProperty('position');
+        languageMenu.style.removeProperty('top');
+        languageMenu.style.removeProperty('left');
+        languageMenu.style.removeProperty('right');
+        languageMenu.style.removeProperty('width');
+        languageMenu.style.removeProperty('min-width');
+        languageMenu.style.removeProperty('max-width');
+        languageMenu.style.removeProperty('max-height');
+        languageMenu.style.removeProperty('overflow-y');
+        languageMenu.style.removeProperty('overscroll-behavior');
+        languageMenu.style.removeProperty('touch-action');
+        languageMenu.style.removeProperty('transform');
+        languageMenu.style.removeProperty('margin');
+        languageMenu.style.removeProperty('z-index');
+        languageMenu.style.removeProperty('border-top-left-radius');
+        languageMenu.style.removeProperty('border-top-right-radius');
+        languageMenu.remove();
+      }
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
       setLanguage(action.slice(13));

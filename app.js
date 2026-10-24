@@ -4,7 +4,7 @@
 
   const STORAGE_KEY = 'dukaandesk.local.v1';
   const modes = ['Cash', 'UPI', 'Other'];
-  const units = ['piece', 'packet', 'kg', 'gram', 'litre', 'ml', 'dozen', 'metre', 'box', 'pair', 'set', 'bag', 'other'];
+  const units = ['Piece', 'Packet', 'Kg', 'Gram', 'Litre', 'Ml', 'Dozen', 'Metre', 'Box', 'Pair', 'Set', 'Bag', 'Other'];
   const icons = {
     store: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18l-2-6H5l-2 6Z"/><path d="M5 10v10h14V10M9 20v-6h6v6"/><path d="M3 10c0 3 4 3 4 0 0 3 4 3 4 0 0 3 4 3 4 0 0 3 4 3 4 0"/></svg>',
     calendar: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>',

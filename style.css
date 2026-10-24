@@ -1061,3 +1061,29 @@ html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!import
     display: none !important;
   }
 }
+
+
+/* Final language dropdown sizing/scroll lock: menu is portaled to body by app.js. */
+body > .native-language-picker .language-menu,
+body > .language-menu.app-select-menu,
+body > .app-select-menu.language-menu {
+  position: fixed !important;
+  left: 50vw !important;
+  right: auto !important;
+  width: min(320px, calc(100vw - 40px)) !important;
+  min-width: 0 !important;
+  max-width: calc(100vw - 40px) !important;
+  max-height: calc(100dvh - var(--language-menu-top, 78px)) !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  touch-action: pan-y !important;
+  transform: translateX(-50%) !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  border-radius: 0 0 18px 18px !important;
+  z-index: 999999 !important;
+}
+html:has(body > .language-menu:not([hidden])),
+body:has(> .language-menu:not([hidden])) {
+  overflow: hidden !important;
+}

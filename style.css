@@ -785,3 +785,19 @@ input,textarea,[contenteditable="true"]{
   .workspace{padding-top:calc(env(safe-area-inset-top) + 12px)!important}
   .topbar{margin-top:9px!important}
 }
+
+
+/* Keep the header container fixed at the top; lower only its inner contents. */
+@media(max-width:1000px){
+  .topbar{margin-top:0!important;position:sticky!important;top:0!important}
+  .topbar-inner,.topbar-content,.topbar .header-inner,.topbar .header-content{
+    transform:translateY(5px)!important;
+  }
+  .topbar{padding-top:10px!important;padding-bottom:0!important}
+}
+@media(max-width:620px){
+  .topbar{margin-top:0!important;top:0!important}
+  .topbar .mobile-brand,.topbar .topbar-actions{
+    transform:translateY(5px)!important;
+  }
+}

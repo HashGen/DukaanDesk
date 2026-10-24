@@ -1001,3 +1001,35 @@ html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!import
     word-break: normal !important;
   }
 }
+
+/* DukaanDesk lower dashboard layout fix: also handle Android Chrome desktop-site viewport. */
+@media (max-width: 1000px) {
+  html body .dashboard-columns {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  html body .dashboard-columns > .trend-panel,
+  html body .dashboard-columns > .quick-panel {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  html body .quick-action {
+    display: grid !important;
+    grid-template-columns: 42px minmax(0, 1fr) 24px !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+  html body .quick-copy,
+  html body .quick-copy strong,
+  html body .quick-copy small {
+    min-width: 0 !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+}

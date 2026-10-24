@@ -687,31 +687,17 @@
     if (action === 'toggle-language') {
       const menu = app.querySelector('[data-language-menu]');
       if (menu) {
-        const opening = menu.hidden;
-        menu.hidden = !opening;
-        if (opening) {
-          /* Portal to body: fixed menus inside transformed/sticky app wrappers
-             become fixed to that wrapper and drift to the right on mobile. */
-          if (menu.parentElement !== document.body) {
-            menu.dataset.portalHome = 'header-language';
-            document.body.appendChild(menu);
-          }
+        menu.hidden = !menu.hidden;
+        if (!menu.hidden) {
           const header = app.querySelector('.topbar');
           const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
           menu.style.setProperty('--language-menu-top', headerBottom + 'px');
           menu.style.top = headerBottom + 'px';
-          menu.style.left = '50vw';
-          menu.style.right = 'auto';
-          menu.style.width = 'calc(100vw - 28px)';
-          menu.style.maxWidth = 'calc(100vw - 28px)';
-          menu.style.transform = 'translateX(-50%)';
           menu.classList.remove('language-menu-opening');
           void menu.offsetWidth;
           menu.classList.add('language-menu-opening');
         } else {
           menu.classList.remove('language-menu-opening');
-          const picker = app.querySelector('.native-language-picker');
-          if (picker && menu.parentElement === document.body) picker.appendChild(menu);
         }
       }
       return;

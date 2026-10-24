@@ -1153,3 +1153,33 @@ body > .language-menu.app-select-menu .language-option {
   white-space: nowrap !important;
   min-height: 46px !important;
 }
+
+
+/* Global title-case typography requested for DukaanDesk. */
+#app :is(h1,h2,h3,h4,h5,h6,p,span,strong,small,label,button,a,li,th,td,summary,legend,figcaption,.eyebrow,.metric-overline,.metric-caption,.panel-heading,.quick-copy,.form-field>span,.mobile-nav-link,.language-option,.custom-select-option) {
+  text-transform: capitalize;
+}
+
+/* Keep every custom dropdown consistent and center option labels. */
+body > .custom-select-menu.app-select-menu,
+body > .app-select-menu.custom-select-menu,
+body > .language-menu.app-select-menu {
+  width: min(340px, calc(100vw - 40px)) !important;
+  max-width: min(340px, calc(100vw - 40px)) !important;
+  min-width: 0 !important;
+  text-align: center !important;
+  border: 0 !important;
+  border-top: 0 !important;
+  border-radius: 0 0 16px 16px !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+body > .custom-select-menu .custom-select-option,
+body > .custom-select-menu .language-option,
+body > .language-menu.app-select-menu .language-option {
+  justify-content: center !important;
+  text-align: center !important;
+  padding-left: 14px !important;
+  padding-right: 14px !important;
+  white-space: nowrap !important;
+}

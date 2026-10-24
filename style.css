@@ -709,3 +709,6 @@ html body .custom-select-menu.language-menu-opening{
 :root[data-theme="dark"] .panel,:root[data-theme="dark"] .metric-card{background:#1a2b23!important}
 :root[data-theme="dark"] .mobile-nav-link{color:#aebbb2!important;background:linear-gradient(180deg,#203129,#17251e)!important;box-shadow:0 3px 0 #101b16,0 5px 10px rgba(0,0,0,.25)!important}
 :root[data-theme="dark"] .mobile-nav-link.active{color:#e5f7df!important;background:linear-gradient(180deg,#2b4938,#203a2d)!important;border-color:#3a5b45!important}
+
+/* Slightly roomier mobile brand; preserve header balance. */
+@media(max-width:700px){.mobile-brand{gap:7px}.mobile-brand .brand-mark{width:46px;height:46px;flex:0 0 46px;border-radius:14px}.mobile-brand .brand-mark svg{width:21px;height:21px}.mobile-brand strong{font-size:16px;letter-spacing:-.45px}.topbar-title-wrap{min-width:0}}

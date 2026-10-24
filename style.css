@@ -884,3 +884,30 @@ html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!import
   }
 }
 /* Keep dropdowns visually emerging from the header with no top gap. */
+
+
+/* Fix: language and other popovers open centered, flush against the header bottom. */
+@media (max-width: 1000px) {
+  header, .topbar, .app-header, .site-header, .header {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+  .language-menu, .dropdown-menu, .popover-menu, .menu-dropdown,
+  [role="listbox"], [role="menu"] {
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    top: var(--dropdown-header-bottom, 0px) !important;
+    transform: translateX(-50%) !important;
+    width: min(460px, calc(100vw - 28px)) !important;
+    max-width: calc(100vw - 28px) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    z-index: 250 !important;
+  }
+  .language-menu::before, .dropdown-menu::before, .popover-menu::before,
+  .menu-dropdown::before { display: none !important; }
+}

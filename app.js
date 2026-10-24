@@ -428,9 +428,15 @@
       for (const [source, translations] of entries) {
         const target = translations && translations[index];
         if (!target || source === target) continue;
-        if (out.trim() === source) return out.replace(source, target);
+        // Match case-insensitively because visible labels may use Title Case.
+        // Keep translation keys independent from display capitalization.
+        const escapedSource = source.replace(/[.*+?^${}()|[\]\\]/g, '\\        if (out.trim() === source) return out.replace(source, target);
         // Translate phrases embedded in a larger text node too, without touching markup.
-        out = out.split(source).join(target);
+        out = out.split(source).join(target);');
+        const matcher = new RegExp(escapedSource, 'gi');
+        if (out.trim().toLowerCase() === source.toLowerCase()) return out.replace(matcher, target);
+        // Translate phrases embedded in a larger text node too, without touching markup.
+        out = out.replace(matcher, target);
       }
       return out;
     };

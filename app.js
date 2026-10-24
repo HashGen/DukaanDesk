@@ -692,36 +692,38 @@
       return;
     }
     if (action === 'toggle-language') {
-      const menu = app.querySelector('[data-language-menu]');
+      const menu = document.querySelector('[data-language-menu]');
       if (menu) {
-        menu.hidden = !menu.hidden;
-        if (!menu.hidden) {
+        const opening = menu.hidden;
+        if (opening) {
           const header = app.querySelector('.topbar');
-          const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
-          menu.style.setProperty('--language-menu-top', headerBottom + 'px');
-          menu.style.top = headerBottom + 'px';
-          /* Put the open menu directly under body so transformed/sticky header
-             ancestors cannot trap fixed positioning inside the language icon. */
+          const headerBottom = header ? header.getBoundingClientRect().bottom : 78;
           if (menu.parentElement !== document.body) document.body.appendChild(menu);
-          menu.style.position = 'fixed';
-          menu.style.left = '50vw';
-          menu.style.right = 'auto';
-          menu.style.width = 'min(320px, calc(100vw - 40px))';
-          menu.style.maxWidth = 'calc(100vw - 40px)';
-          menu.style.maxHeight = 'calc(100dvh - ' + headerBottom + 'px)';
-          menu.style.overflowY = 'auto';
-          menu.style.overscrollBehavior = 'contain';
-          menu.style.touchAction = 'pan-y';
-          menu.style.transform = 'translateX(-50%)';
-          menu.style.margin = '0';
-          menu.style.zIndex = '999999';
+          menu.hidden = false;
+          menu.style.setProperty('--language-menu-top', headerBottom + 'px', 'important');
+          menu.style.setProperty('position', 'fixed', 'important');
+          menu.style.setProperty('top', headerBottom + 'px', 'important');
+          menu.style.setProperty('left', '50vw', 'important');
+          menu.style.setProperty('right', 'auto', 'important');
+          menu.style.setProperty('width', 'max-content', 'important');
+          menu.style.setProperty('min-width', '0', 'important');
+          menu.style.setProperty('max-width', 'min(280px, calc(100vw - 40px))', 'important');
+          menu.style.setProperty('max-height', 'calc(100dvh - ' + headerBottom + 'px)', 'important');
+          menu.style.setProperty('overflow-y', 'auto', 'important');
+          menu.style.setProperty('overscroll-behavior', 'contain', 'important');
+          menu.style.setProperty('touch-action', 'pan-y', 'important');
+          menu.style.setProperty('transform', 'translateX(-50%) translateY(0)', 'important');
+          menu.style.setProperty('margin', '0', 'important');
+          menu.style.setProperty('z-index', '999999', 'important');
+          menu.style.setProperty('border-top-left-radius', '0', 'important');
+          menu.style.setProperty('border-top-right-radius', '0', 'important');
+          menu.style.setProperty('animation', 'languageDropdownEnter 260ms cubic-bezier(.2,.8,.2,1) both', 'important');
           document.documentElement.style.overflow = 'hidden';
           document.body.style.overflow = 'hidden';
           menu.addEventListener('touchmove', function (touchEvent) { touchEvent.stopPropagation(); }, { passive: true });
-          menu.classList.remove('language-menu-opening');
-          void menu.offsetWidth;
           menu.classList.add('language-menu-opening');
         } else {
+          menu.hidden = true;
           menu.classList.remove('language-menu-opening');
           document.documentElement.style.overflow = '';
           document.body.style.overflow = '';
@@ -729,11 +731,11 @@
       }
       return;
     }
-    if (action.startsWith('set-language:')) { 
+    if (action.startsWith('set-language:')) {
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
-      setLanguage(action.slice(13)); 
-      return; 
+      setLanguage(action.slice(13));
+      return;
     }
     if (action === 'toggle-theme') { const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = next; try { localStorage.setItem('dukaandesk.theme.v1', next); } catch (error) {} render(); return; }
     if (action === 'dismiss-sale' && event.target === target) { closeSale(); return; }

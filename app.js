@@ -412,7 +412,7 @@
       '<div class="local-note"><span class="local-note-icon">' + svg('shield', 17) + '</span><span><strong>Private by Design</strong><small>Your Records Stay in This Browser.</small></span></div>' +
       '<div class="sidebar-footer"><span class="status-dot"></span> LOCAL STORAGE <span class="version-tag">v1.0</span></div></aside>' +
       '<div class="workspace"><header class="topbar"><div class="topbar-title-wrap"><div class="mobile-brand"><span class="brand-mark">' + svg('store', 18) + '</span><strong>DukaanDesk</strong></div><div class="topbar-title"><h1>' + active.label + '</h1><p>' + longDate(todayISO()) + '</p></div></div>' +
-      '<div class="topbar-actions">' + languagePickerHtml('header-language-picker') + '<button type="button" class="theme-toggle" data-action="toggle-theme" aria-label="Toggle light and dark mode" title="Toggle theme">' + (document.documentElement.dataSet.theme === 'dark' ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.9 13A8.5 8.5 0 0 1 11 3.1 8.5 8.5 0 1 0 20.9 13Z"/></svg>') + '</button>' +
+      '<div class="topbar-actions">' + languagePickerHtml('header-language-picker') + '<button type="button" class="theme-toggle" data-action="toggle-theme" aria-label="Toggle light and dark mode" title="Toggle theme">' + (document.documentElement.dataset.theme === 'dark' ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.9 13A8.5 8.5 0 0 1 11 3.1 8.5 8.5 0 1 0 20.9 13Z"/></svg>') + '</button>' +
       '<span class="today-chip">' + svg('calendar', 15) + longDate(todayISO()) + '</span>' +
       '<button type="button" class="primary-button" data-action="new-sale">' + svg('plus', 16) + '<span>' + tr('openSale') + '</span></button></div></header>' +
       '<main class="main-content">' + content + '</main><footer class="mobile-footer">' + svg('shield', 13) + ' Private by design · Local device storage</footer></div>' +
@@ -448,7 +448,7 @@
       })
     );
   }
-  try { const savedTheme = localStorage.getItem('dukaandesk.theme.v1'); document.documentElement.dataSet.theme = savedTheme === 'dark' ? 'dark' : 'light'; } catch (error) { document.documentElement.dataSet.theme = 'light'; }
+  try { const savedTheme = localStorage.getItem('dukaandesk.theme.v1'); document.documentElement.dataset.theme = savedTheme === 'dark' ? 'dark' : 'light'; } catch (error) { document.documentElement.dataset.theme = 'light'; }
   function render() {
     document.documentElement.lang = currentLanguage === 'hinglish' ? 'en' : currentLanguage;
     document.documentElement.dir = ['ur','ar'].includes(currentLanguage) ? 'rtl' : 'ltr';
@@ -651,7 +651,7 @@
       }
       return;
     }
-    const action = target.dataSet.action;
+    const action = target.dataset.action;
     if (action.startsWith('toggle-select:')) {
       const id = action.slice('toggle-select:'.length);
       const wrap = target.closest('.custom-select-field');
@@ -792,7 +792,7 @@
       SetLanguage(action.slice(13));
       return;
     }
-    if (action === 'toggle-theme') { const next = document.documentElement.dataSet.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataSet.theme = next; try { localStorage.SetItem('dukaandesk.theme.v1', next); } catch (error) {} render(); return; }
+    if (action === 'toggle-theme') { const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = next; try { localStorage.SetItem('dukaandesk.theme.v1', next); } catch (error) {} render(); return; }
     if (action === 'dismiss-sale' && event.target === target) { closeSale(); return; }
     if (action === 'dismiss-collection' && event.target === target) { closeCollection(); return; }
     if (action === 'dismiss-delete' && event.target === target) { deleteTarget = null; render(); return; }
@@ -814,21 +814,21 @@
     if (action === 'history-today') { historyDate = todayISO(); render(); return; }
   });
   app.addEventListener('change', event => {
-    const field = event.target.dataSet.field;
+    const field = event.target.dataset.field;
     if (field === 'language') { SetLanguage(event.target.value); return; }
     if (field === 'sale-unit') { saleDraft.unit = event.target.value; return; }
     if (field === 'sale-mode') { saleDraft.paymentMode = event.target.value; return; }
     if (field === 'collection-mode') { collectionDraft.mode = event.target.value; return; }
   });
   app.addEventListener('input', event => {
-    const fieldName = event.target.dataSet.field;
+    const fieldName = event.target.dataset.field;
     if (fieldName === 'search') {
       searchQuery = event.target.value;
       const pageTop = app.querySelector('.topbar');
       const start = event.target.selectionStart;
       render();
       const next = app.querySelector('[data-field="search"]');
-      if (next) { next.focus({ preventScroll: true }); next.SetSelectionRange(start, start); }
+      if (next) { next.focus({ preventScroll: true }); next.setSelectionRange(start, start); }
       return;
     }
     if (fieldName === 'history-date') { historyDate = event.target.value || todayISO(); render(); return; }
@@ -846,7 +846,7 @@
       if (modal) {
         render();
         const next = app.querySelector('[data-field="' + activeName + '"]');
-        if (next) { next.focus({ preventScroll: true }); if (selection != null && next.SetSelectionRange) next.SetSelectionRange(selection, selection); }
+        if (next) { next.focus({ preventScroll: true }); if (selection != null && next.setSelectionRange) next.setSelectionRange(selection, selection); }
       }
     }
   });
@@ -854,8 +854,8 @@
     const form = event.target.closest('[data-form]');
     if (!form) return;
     event.preventDefault();
-    if (form.dataSet.form === 'sale') handleSaleSubmit();
-    if (form.dataSet.form === 'collection') handleCollectionSubmit();
+    if (form.dataset.form === 'sale') handleSaleSubmit();
+    if (form.dataset.form === 'collection') handleCollectionSubmit();
   });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') {

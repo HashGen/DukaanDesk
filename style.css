@@ -816,3 +816,18 @@ input,textarea,[contenteditable="true"]{
 @media(max-width:620px){
   .topbar{margin-top:0!important;width:100%!important}
 }
+
+
+/* Final correction: remove the gray strip between the browser viewport and header card. */
+@media(max-width:1000px){
+  .workspace{padding-top:0!important;margin-top:0!important}
+  .topbar{
+    margin-top:-21px!important;
+    position:sticky!important;
+    top:0!important;
+    z-index:40!important;
+  }
+}
+@media(max-width:620px){
+  .topbar{margin-top:-21px!important}
+}

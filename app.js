@@ -641,9 +641,14 @@
     const field = event.target;
     if (field && field.matches('[data-field="language"]')) setLanguage(field.value);
   });
-  app.addEventListener('click', event => {
+  document.addEventListener('click', event => {
     const target = event.target.closest('[data-action]');
-    if (!target) { if (!event.target.closest('.native-language-picker')) app.querySelectorAll('.language-menu').forEach(menu => { menu.hidden = true; }); return; }
+    if (!target) {
+      if (!event.target.closest('.native-language-picker') && !event.target.closest('[data-language-menu]')) {
+        document.querySelectorAll('.language-menu').forEach(menu => { menu.hidden = true; });
+      }
+      return;
+    }
     const action = target.dataset.action;
     if (action.startsWith('toggle-select:')) {
       const id = action.slice('toggle-select:'.length);
@@ -693,6 +698,17 @@
           const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
           menu.style.setProperty('--language-menu-top', headerBottom + 'px');
           menu.style.top = headerBottom + 'px';
+          /* Put the open menu directly under body so transformed/sticky header
+             ancestors cannot trap fixed positioning inside the language icon. */
+          if (menu.parentElement !== document.body) document.body.appendChild(menu);
+          menu.style.position = 'fixed';
+          menu.style.left = '50vw';
+          menu.style.right = 'auto';
+          menu.style.width = 'min(460px, calc(100vw - 28px))';
+          menu.style.maxWidth = 'calc(100vw - 28px)';
+          menu.style.transform = 'translateX(-50%)';
+          menu.style.margin = '0';
+          menu.style.zIndex = '999999';
           menu.classList.remove('language-menu-opening');
           void menu.offsetWidth;
           menu.classList.add('language-menu-opening');

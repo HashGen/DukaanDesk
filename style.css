@@ -716,3 +716,41 @@ html body .custom-select-menu.language-menu-opening{
 /* Final mobile header refinement: slightly larger brand, balanced spacing. */
 @media(max-width:620px){.topbar{padding-left:14px!important;padding-right:14px!important}.topbar-title-wrap{flex:0 1 40%;max-width:40%}.mobile-brand{gap:7px!important}.mobile-brand .brand-mark{width:38px!important;height:38px!important;flex-basis:38px!important;border-radius:12px!important}.mobile-brand .brand-mark .icon svg{width:22px!important;height:22px!important}.mobile-brand strong{font-size:15px!important;letter-spacing:-.3px!important}.topbar-actions{gap:6px!important}.native-language-picker{flex:0 1 88px;max-width:88px!important}.native-language-picker select{max-width:88px!important;font-size:10px!important}.topbar-actions .theme-toggle{width:38px!important;min-width:38px!important;flex-basis:38px!important;height:40px!important}.topbar-actions .primary-button{width:40px!important;min-width:40px!important;flex-basis:40px!important;height:40px!important;min-height:40px!important}}
 @media(max-width:380px){.topbar{padding-left:9px!important;padding-right:9px!important}.topbar-title-wrap{flex-basis:38%;max-width:38%}.mobile-brand .brand-mark{width:34px!important;height:34px!important;flex-basis:34px!important}.mobile-brand strong{font-size:13px!important}.native-language-picker{flex-basis:75px;max-width:75px!important}.native-language-picker select{max-width:75px!important}.topbar-actions .theme-toggle,.topbar-actions .primary-button{width:34px!important;min-width:34px!important;flex-basis:34px!important;height:36px!important;min-height:36px!important}}
+
+
+/* Final mobile polish: safe status-bar inset, stronger brand, edge-to-edge footer. */
+@media(max-width:1000px){
+  .workspace{padding-top:env(safe-area-inset-top)!important;min-height:100dvh!important}
+  .topbar{
+    box-sizing:border-box!important;
+    height:78px!important;min-height:78px!important;
+    margin:0 8px!important;width:calc(100% - 16px)!important;
+    padding:0 14px!important;
+  }
+  .mobile-brand{gap:8px!important}
+  .mobile-brand .brand-mark{
+    width:44px!important;height:44px!important;flex-basis:44px!important;
+    border-radius:13px!important;
+  }
+  .mobile-brand .brand-mark .icon svg{width:24px!important;height:24px!important}
+  .mobile-brand strong{font-size:17px!important;letter-spacing:-.35px!important}
+  .mobile-nav{
+    left:8px!important;right:8px!important;bottom:0!important;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom))!important;
+    background:var(--paper,#fff)!important;
+    border-radius:20px 20px 0 0!important;
+  }
+  .app-shell{min-height:100dvh!important;padding-bottom:calc(86px + env(safe-area-inset-bottom))!important}
+  .mobile-footer{margin-bottom:0!important;padding-bottom:calc(16px + env(safe-area-inset-bottom))!important}
+}
+@media(max-width:620px){
+  .topbar{margin:0 7px!important;width:calc(100% - 14px)!important;padding:0 11px!important}
+  .mobile-brand .brand-mark{width:42px!important;height:42px!important;flex-basis:42px!important}
+  .mobile-brand strong{font-size:16px!important}
+  .topbar-actions{gap:6px!important}
+  .topbar-actions .theme-toggle{width:39px!important;height:41px!important;flex-basis:39px!important}
+  .topbar-actions .primary-button{width:42px!important;height:42px!important;min-height:42px!important;flex-basis:42px!important}
+  .mobile-nav{left:7px!important;right:7px!important;gap:6px!important;padding-left:7px!important;padding-right:7px!important}
+}
+/* The source-code download panel is intentionally removed from the app UI. */
+.source-code-panel,.source-code-section,.source-download-panel,.guide-source-panel{display:none!important}

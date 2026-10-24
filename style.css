@@ -844,3 +844,43 @@ html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!import
   .metrics-grid,.dashboard-columns,.credit-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   .panel,.metric-card{min-width:0!important;max-width:100%!important}
 }
+
+
+/* Unified mobile dropdowns: centered under the header, attached to it without a gap. */
+@media(max-width:1000px){
+  .topbar{z-index:100!important}
+  .native-language-picker,
+  .language-menu,
+  .dropdown-menu,
+  .popover-menu,
+  .menu-dropdown,
+  [role="listbox"],
+  [role="menu"]{
+    z-index:120!important;
+  }
+  .native-language-picker select,
+  .language-menu,
+  .dropdown-menu,
+  .popover-menu,
+  .menu-dropdown{
+    position:fixed!important;
+    top:var(--mobile-dropdown-top, 78px)!important;
+    left:50%!important;
+    right:auto!important;
+    transform:translateX(-50%)!important;
+    width:min( min( calc(100vw - 28px), 460px), 92vw)!important;
+    max-width:calc(100vw - 28px)!important;
+    margin:0!important;
+    border-top-left-radius:0!important;
+    border-top-right-radius:0!important;
+    box-shadow:0 12px 28px rgba(20,45,31,.16)!important;
+  }
+  .main-content{padding-top:26px!important}
+}
+@media(max-width:620px){
+  .main-content{padding-top:28px!important}
+  .language-menu,.dropdown-menu,.popover-menu,.menu-dropdown{
+    top:78px!important;
+  }
+}
+/* Keep dropdowns visually emerging from the header with no top gap. */

@@ -831,3 +831,16 @@ input,textarea,[contenteditable="true"]{
 @media(max-width:620px){
   .topbar{margin-top:-21px!important}
 }
+
+
+/* Prevent horizontal overflow on Android browsers using desktop-site mode. */
+html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+#app,.app-shell,.workspace,.main-content{box-sizing:border-box!important;width:100%!important;max-width:100%!important;min-width:0!important}
+@media(max-width:1100px){
+  .sidebar{display:none!important}
+  .app-shell{display:block!important;overflow-x:clip!important}
+  .workspace{overflow-x:clip!important}
+  .main-content{padding-left:14px!important;padding-right:14px!important}
+  .metrics-grid,.dashboard-columns,.credit-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .panel,.metric-card{min-width:0!important;max-width:100%!important}
+}
